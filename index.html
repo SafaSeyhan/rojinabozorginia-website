@@ -34,7 +34,7 @@ h1,h2,h3{font-family:var(--f-display);font-weight:500;margin:0;line-height:1.02;
 p{margin:0}
 .wrap{max-width:var(--wrap);margin-inline:auto;padding-left:max(var(--gut),env(safe-area-inset-left,0px));padding-right:max(var(--gut),env(safe-area-inset-right,0px))}
 
-#gl{position:fixed;inset:0;width:100%;height:100%;z-index:0;pointer-events:none;display:block}
+#gl{position:fixed;left:0;top:0;width:100%;height:100vh;height:100lvh;z-index:0;pointer-events:none;display:block}
 #site{position:relative;z-index:1}
 .anchor{pointer-events:none}
 
@@ -254,6 +254,12 @@ footer{padding-block:28px calc(env(safe-area-inset-bottom,0px) + 100px);color:va
 footer .wrap{display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap}
 @media (min-width:900px){footer{padding-bottom:28px}}
 
+/* Phones: frosted-glass blur over a moving canvas is the costliest thing on the page, so use plain tinted panels there */
+@media (max-width:899px),(hover:none){
+  .bar,.sheet,.dock,.card,form,.btn.ghost{backdrop-filter:none;-webkit-backdrop-filter:none}
+  .bar,.sheet,.dock{background:rgba(11,10,28,.93)}
+  .card,form{background:rgba(22,20,48,.86)}
+}
 @keyframes beat{0%,100%{transform:scale(1)}12%{transform:scale(1.22)}24%{transform:scale(1)}36%{transform:scale(1.12)}}
 @keyframes ring{0%{transform:scale(1);opacity:.9}70%,100%{transform:scale(1.18,1.5);opacity:0}}
 @keyframes flip{from{opacity:0;transform:rotateX(-92deg) translateY(.35em)}to{opacity:1;transform:none}}
@@ -539,10 +545,11 @@ const LAND = "AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
   menuBtn.onclick = () => { const open = sheet.hidden; sheet.hidden = !open; menuBtn.setAttribute("aria-expanded", open); };
   $$("a", sheet).forEach(a => a.addEventListener("click", () => { sheet.hidden = true; menuBtn.setAttribute("aria-expanded", false); }));
 
+  let heroOn = true;
   const dock = $("#dock"), heroSec = $(".hero"), contactSec = $("#contact");
   if (window.IntersectionObserver) {
     let past = false, atC = false; const upd = () => dock.classList.toggle("show", past && !atC);
-    new IntersectionObserver(([e]) => { past = !e.isIntersecting; upd(); }).observe(heroSec);
+    new IntersectionObserver(([e]) => { past = !e.isIntersecting; heroOn = e.isIntersecting; upd(); }).observe(heroSec);
     new IntersectionObserver(([e]) => { atC = e.isIntersecting; upd(); }, { threshold: .15 }).observe(contactSec);
   }
 
@@ -617,7 +624,7 @@ const LAND = "AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
     cap.innerHTML = ""; cap.append((vis || city).textContent);
     const sm = document.createElement("small"); sm.textContent = $(".y", r).textContent; cap.appendChild(sm);
   }
-  onLang = () => setActive(active);
+  onLang = () => { setActive(active); lastSY = -1; };
   const wide = matchMedia("(min-width: 900px)");
   rows.forEach((r, i) => {
     r.addEventListener("pointerenter", () => { if (fine) setActive(i, true); });
@@ -639,19 +646,19 @@ const LAND = "AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
   const G = (p, m, s) => Math.exp(-Math.pow((p - m) / s, 2));
   const wave = p => .12 * G(p, .16, .028) - .1 * G(p, .262, .009) + G(p, .29, .012) - .24 * G(p, .318, .01) + .3 * G(p, .52, .05);
   const thump = p => G(p, .33, .06) + .45 * G(p, .62, .08);
-  let eW = 0, eH = 0, eX = 0, eY = null, dpr = Math.min(devicePixelRatio || 1, 2);
+  let eW = 0, eH = 0, eX = 0, eY = null, dpr = Math.min(devicePixelRatio || 1, (fine && innerWidth >= 900) ? 2 : 1.5);
   function sizeEcg(){ eW = ecg.clientWidth; eH = ecg.clientHeight; ecg.width = eW * dpr; ecg.height = eH * dpr; ex.setTransform(dpr, 0, 0, dpr, 0, 0); eX = 0; eY = null;
     if (reduce) { ex.strokeStyle = "#ff4458"; ex.lineWidth = 2; ex.beginPath(); for (let x = 0; x <= eW; x++) { const y = eH * .72 - wave((x / 150) % 1) * eH * .6; x ? ex.lineTo(x, y) : ex.moveTo(x, y); } ex.stroke(); } }
   sizeEcg();
   function drawEcg(dt){
     const speed = 150, steps = Math.max(1, Math.ceil(speed * dt));
-    ex.strokeStyle = "#ff4458"; ex.lineWidth = 2; ex.lineJoin = "round"; ex.shadowColor = "#ff4458"; ex.shadowBlur = 8;
+    ex.lineJoin = ex.lineCap = "round";
     for (let s = 0; s < steps; s++) {
       phase += (dt / steps) * bpm / 60;
       const nx = eX + speed * dt / steps, y = eH * .72 - wave(phase % 1) * eH * .6;
       if (nx >= eW) { eX = 0; eY = null; ex.clearRect(0, 0, 26, eH); continue; }
       ex.clearRect(nx + 1, 0, 26, eH);
-      if (eY !== null) { ex.beginPath(); ex.moveTo(eX, eY); ex.lineTo(nx, y); ex.stroke(); }
+      if (eY !== null) { ex.beginPath(); ex.moveTo(eX, eY); ex.lineTo(nx, y); ex.strokeStyle = "rgba(255,68,88,.16)"; ex.lineWidth = 9; ex.stroke(); ex.strokeStyle = "rgba(255,68,88,.3)"; ex.lineWidth = 5; ex.stroke(); ex.strokeStyle = "#ff4458"; ex.lineWidth = 2; ex.stroke(); }
       eX = nx; eY = y;
     }
   }
@@ -660,7 +667,10 @@ const LAND = "AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
   // ---- Scroll-linked depth ----
   const depths = $$(".depth").map(el => ({ el, inner: $(".depth-in", el), dir: +el.dataset.dir }));
   const tl = $("#tl"), tlItems = $$("li", tl), bar = $("#bar"), heroCopy = $(".hero-copy");
+  let lastSY = -1, lastMX = 0, lastMY = 0;
   function scrollFx(){
+    if (scrollY === lastSY && mx === lastMX && my === lastMY) return;
+    lastSY = scrollY; lastMX = mx; lastMY = my;
     const H = innerHeight, max = document.documentElement.scrollHeight - H;
     bar.style.setProperty("--scroll", max > 0 ? Math.min(1, scrollY / max) : 0);
     if (!reduce) for (const d of depths) {
@@ -786,11 +796,11 @@ const LAND = "AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
     let intro = reduce ? 1 : 0, rotX = 0, rotY = 0, spin = 0;
 
     gl = { resize, frame(dt, t, beat){
-      const wpp = 2 * DIST * Math.tan(FOV * Math.PI / 360) / H;
+      const wpp = 2 * DIST * Math.tan(FOV * Math.PI / 360) / H, VH = innerHeight;
       let best = null, e = 0, br = null;
-      for (const a of anchors) { const r = a.el.getBoundingClientRect(), d = Math.abs(r.top + r.height / 2 - H / 2) / H, pr = 1 - sm(.5, 1.2, d); if (pr > e) { e = pr; best = a; br = r; } }
+      for (const a of anchors) { const r = a.el.getBoundingClientRect(), d = Math.abs(r.top + r.height / 2 - VH / 2) / VH, pr = 1 - sm(.5, 1.2, d); if (pr > e) { e = pr; best = a; br = r; } }
       const shape = best ? best.shape : 0, cover = Math.max(W, H) / 2;
-      const cx = best ? lerp(W / 2, br.left + br.width / 2, e) : W / 2, cy = best ? lerp(H / 2, br.top + br.height / 2, e) : H / 2;
+      const cx = best ? lerp(W / 2, br.left + br.width / 2, e) : W / 2, cy = best ? lerp(VH / 2, br.top + br.height / 2, e) : VH / 2;
       const unit = best ? lerp(cover, Math.min(br.width, br.height) / 2 * (shape === 2 ? .84 : .8), e) : cover;
       group.position.set((cx - W / 2) * wpp, -(cy - H / 2) * wpp, 0); group.scale.setScalar(unit * wpp);
       U.uW.value.set(shape === 0 ? e : 0, 1 - e, shape === 2 ? e : 0);
@@ -825,12 +835,17 @@ const LAND = "AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
     const dt = Math.min(.05, (now - last) / 1000); last = now; t += dt;
     if (document.hidden) return;
     bpm += (bpmTarget - bpm) * Math.min(1, dt * .35);
-    if (!reduce) drawEcg(dt); else phase = 0;
+    if (reduce) phase = 0; else if (heroOn) drawEcg(dt); else { phase += dt * bpm / 60; eY = null; }
     const shown = Math.round(bpm); if (bpmEl.textContent != shown) bpmEl.textContent = shown;
     scrollFx();
     if (gl) gl.frame(dt, t, reduce ? 0 : thump(phase % 1));
   }
-  addEventListener("resize", () => { sizeEcg(); if (gl) gl.resize(); });
+  // Phone browsers fire resize all the time while the address bar slides in and out; rebuilding the canvases then is what made scrolling stutter
+  let lastW = innerWidth, lastH = innerHeight, rz = 0;
+  addEventListener("resize", () => {
+    if (innerWidth === lastW && Math.abs(innerHeight - lastH) < 200) return;
+    clearTimeout(rz); rz = setTimeout(() => { lastW = innerWidth; lastH = innerHeight; lastSY = -1; sizeEcg(); if (gl) gl.resize(); }, 150);
+  });
   requestAnimationFrame(loop);
 })();
 </script>
