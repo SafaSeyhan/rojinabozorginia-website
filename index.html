@@ -3,248 +3,278 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>Dr. Rojina Bozorginia · Cardiovascular Surgeon</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<title>Dr. Rojina Bozorginia</title>
+<meta name="description" content="Dr. Rojina Bozorginia, cardiovascular surgeon in Istanbul. Coronary bypass, valve repair, aortic and minimally invasive heart surgery.">
+<meta name="theme-color" content="#0b0a1c">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,600;12..96,700;12..96,800&family=Plus+Jakarta+Sans:ital,wght@0,400;0,500;0,600;0,700;1,500&family=JetBrains+Mono:wght@500&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bodoni+Moda:ital,opsz,wght@0,6..96,400..800;1,6..96,400..800&family=Schibsted+Grotesk:wght@400..800&display=swap">
 <style>
-/* Layout: a dark "cath-lab" stage with a beating 3D particle heart opens the page; the rest is floating glass cards that tilt in 3D. Mobile first. */
+/* Layout: one WebGL particle body lives behind the whole page. It is a beating heart in the opening, thins into drifting blood cells behind the reading sections, gathers into a globe for the congresses, and returns as a heart at the booking form. Anatomical-plate colour: arterial red, venous blue, bone white on a venous-night ground. */
 :root{
-  --bg:#f3f5fa; --surface:#ffffff; --surface-2:#eef1f7; --ink:#0c1120; --muted:#465067; --line:#dce1ec;
-  --rose:#e0174a; --rose-2:#b80f3a; --teal:#0d7a70; --on-rose:#ffffff;
-  --shadow:0 18px 50px -24px rgba(17,24,46,.35);
-  --f-display:"Bricolage Grotesque", "Avenir Next", system-ui, sans-serif;
-  --f-body:"Plus Jakarta Sans", system-ui, -apple-system, "Segoe UI", sans-serif;
-  --f-mono:"JetBrains Mono", ui-monospace, Menlo, monospace;
-  --gut:clamp(16px,5vw,48px); --wrap:1180px; --r:22px;
-  /* hero stage is always dark, by design */
-  --stage:#05070e; --stage-ink:#f2f4fa; --stage-muted:#aab2c8; --stage-line:rgba(255,255,255,.12);
+  color-scheme:dark;
+  --night:#0b0a1c; --night-2:#15132e; --glass:rgba(24,22,52,.58); --bone:#f4ede5; --mute:#b1adca; --line:rgba(244,237,229,.15);
+  --artery:#ff4458; --artery-deep:#c81d3a; --vein:#6f9bff;
+  --f-display:"Bodoni Moda","Didot","Bodoni 72",Georgia,serif;
+  --f-body:"Schibsted Grotesk",system-ui,-apple-system,"Segoe UI",sans-serif;
+  --gut:clamp(16px,5vw,56px); --wrap:1240px; --r:14px;
+  --ease:cubic-bezier(.2,.7,.1,1);
 }
-@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){
-  --bg:#070a12; --surface:#0f1423; --surface-2:#141a2c; --ink:#eef1f8; --muted:#a6aec3; --line:#222a3e;
-  --rose:#ff4f72; --rose-2:#ff2d58; --teal:#3dd6c3; --on-rose:#16020a;
-  --shadow:0 18px 50px -20px rgba(0,0,0,.7); color-scheme:dark }}
-:root[data-theme="dark"]{
-  --bg:#070a12; --surface:#0f1423; --surface-2:#141a2c; --ink:#eef1f8; --muted:#a6aec3; --line:#222a3e;
-  --rose:#ff4f72; --rose-2:#ff2d58; --teal:#3dd6c3; --on-rose:#16020a;
-  --shadow:0 18px 50px -20px rgba(0,0,0,.7); color-scheme:dark }
-
 *{box-sizing:border-box}
 [hidden]{display:none!important}
-html{scroll-behavior:smooth}
-body{margin:0;background:var(--bg);color:var(--ink);font:500 1rem/1.65 var(--f-body);-webkit-font-smoothing:antialiased;overflow-x:hidden}
-#site[data-lang="en"] [data-l="tr"], #site[data-lang="tr"] [data-l="en"]{display:none}
+html{scroll-behavior:smooth;background:var(--night)}
+body{margin:0;background:var(--night);color:var(--bone);font:400 1.02rem/1.65 var(--f-body);-webkit-font-smoothing:antialiased;overflow-x:hidden}
+#site[data-lang="en"] [data-l="tr"],#site[data-lang="tr"] [data-l="en"]{display:none}
 a{color:inherit}
-img{max-width:100%}
-:focus-visible{outline:2px solid var(--rose);outline-offset:3px;border-radius:6px}
-.wrap{max-width:var(--wrap);margin-inline:auto;padding-inline:var(--gut)}
-.mono{font-family:var(--f-mono);font-size:.72rem;letter-spacing:.1em;text-transform:uppercase}
-h1,h2,h3{font-family:var(--f-display);font-weight:700;text-wrap:balance;margin:0;line-height:1.05;letter-spacing:-.02em}
+img{max-width:100%;display:block}
+:focus-visible{outline:2px solid var(--vein);outline-offset:3px;border-radius:4px}
+::selection{background:var(--artery);color:#fff}
+h1,h2,h3{font-family:var(--f-display);font-weight:500;margin:0;line-height:1.02;letter-spacing:-.015em;text-wrap:balance}
+p{margin:0}
+.wrap{max-width:var(--wrap);margin-inline:auto;padding-left:max(var(--gut),env(safe-area-inset-left,0px));padding-right:max(var(--gut),env(safe-area-inset-right,0px))}
 
-/* ---------- Nav (floating pill) ---------- */
-.nav{position:fixed;left:0;right:0;top:0;z-index:20;padding:calc(env(safe-area-inset-top,0px) + 10px) 12px 0;pointer-events:none}
-.nav .bar{pointer-events:auto;max-width:var(--wrap);margin-inline:auto;display:flex;align-items:center;gap:12px;padding:8px 8px 8px 16px;border-radius:999px;
-  background:rgba(10,13,24,.62);backdrop-filter:blur(18px) saturate(1.4);-webkit-backdrop-filter:blur(18px) saturate(1.4);border:1px solid rgba(255,255,255,.12);color:#f2f4fa;box-shadow:0 10px 40px -16px rgba(0,0,0,.6)}
-.brand{display:flex;align-items:center;gap:9px;text-decoration:none;font-family:var(--f-display);font-weight:700;font-size:1rem;white-space:nowrap;min-width:0}
+#gl{position:fixed;inset:0;width:100%;height:100%;z-index:0;pointer-events:none;display:block}
+#site{position:relative;z-index:1}
+.anchor{pointer-events:none}
+
+/* ---------- Nav ---------- */
+.nav{position:fixed;left:0;right:0;top:0;z-index:20;padding:calc(env(safe-area-inset-top,0px) + 10px) max(12px,env(safe-area-inset-right,0px)) 0 max(12px,env(safe-area-inset-left,0px));pointer-events:none}
+.bar{pointer-events:auto;position:relative;overflow:hidden;max-width:var(--wrap);margin-inline:auto;display:flex;align-items:center;gap:12px;padding:8px 8px 8px 18px;border-radius:999px;background:rgba(11,10,28,.6);backdrop-filter:blur(18px) saturate(1.4);-webkit-backdrop-filter:blur(18px) saturate(1.4);border:1px solid var(--line)}
+.bar::after{content:"";position:absolute;left:0;bottom:0;height:2px;width:100%;transform-origin:0 50%;transform:scaleX(var(--scroll,0));background:linear-gradient(90deg,var(--vein),var(--artery))}
+.brand{display:flex;align-items:center;gap:10px;text-decoration:none;font-family:var(--f-display);font-weight:600;font-size:1.08rem;white-space:nowrap;min-width:0}
 .brand span{overflow:hidden;text-overflow:ellipsis}
 .brand svg{flex:none;animation:beat .833s infinite}
-.links{display:none;gap:4px;margin-left:auto}
-.links a{text-decoration:none;font-size:.88rem;font-weight:600;padding:8px 14px;border-radius:999px;color:#c9cfdf}
-.links a:hover{background:rgba(255,255,255,.1);color:#fff}
-.lang{display:flex;margin-left:auto;background:rgba(255,255,255,.08);border-radius:999px;padding:3px}
-.lang button{all:unset;cursor:pointer;font-family:var(--f-mono);font-size:.7rem;padding:6px 11px;border-radius:999px;color:#c9cfdf}
-.lang button[aria-pressed="true"]{background:#fff;color:#0b0f1c}
-.menu{all:unset;cursor:pointer;width:38px;height:38px;border-radius:50%;display:grid;place-items:center;background:rgba(255,255,255,.08)}
-.menu i{display:block;width:16px;height:2px;background:#fff;border-radius:2px;box-shadow:0 5px 0 #fff,0 -5px 0 #fff}
-.sheet{pointer-events:auto;max-width:var(--wrap);margin:8px auto 0;border-radius:24px;padding:10px;display:grid;gap:4px;
-  background:rgba(10,13,24,.86);backdrop-filter:blur(18px);-webkit-backdrop-filter:blur(18px);border:1px solid rgba(255,255,255,.12)}
-.sheet a{color:#f2f4fa;text-decoration:none;font-family:var(--f-display);font-weight:600;font-size:1.25rem;padding:12px 14px;border-radius:14px;display:flex;justify-content:space-between}
-.sheet a:hover{background:rgba(255,255,255,.08)}
-.sheet a::after{content:"→";color:#ff4f72}
+.links{display:none;gap:2px;margin-left:auto}
+.links a{text-decoration:none;font-size:.9rem;font-weight:500;padding:8px 14px;border-radius:999px;color:var(--mute);transition:color .2s,background .2s}
+.links a:hover{background:rgba(244,237,229,.09);color:var(--bone)}
+.lang{display:flex;margin-left:auto;background:rgba(244,237,229,.08);border-radius:999px;padding:3px}
+.lang button{all:unset;cursor:pointer;font-size:.76rem;font-weight:600;padding:6px 12px;border-radius:999px;color:var(--mute)}
+.lang button:focus-visible{outline:2px solid var(--vein)}
+.lang button[aria-pressed="true"]{background:var(--bone);color:var(--night)}
+.menu{all:unset;cursor:pointer;width:38px;height:38px;border-radius:50%;display:grid;place-items:center;background:rgba(244,237,229,.08)}
+.menu:focus-visible{outline:2px solid var(--vein)}
+.menu i{display:block;width:16px;height:2px;background:var(--bone);border-radius:2px;box-shadow:0 5px 0 var(--bone),0 -5px 0 var(--bone)}
+.sheet{pointer-events:auto;max-width:var(--wrap);margin:8px auto 0;border-radius:24px;padding:10px;display:grid;gap:2px;background:rgba(11,10,28,.9);backdrop-filter:blur(18px);-webkit-backdrop-filter:blur(18px);border:1px solid var(--line)}
+.sheet a{text-decoration:none;font-family:var(--f-display);font-size:1.5rem;padding:10px 14px;border-radius:14px}
+.sheet a:hover{background:rgba(244,237,229,.08)}
 @media (min-width:900px){.links{display:flex}.lang{margin-left:8px}.menu,.sheet{display:none!important}}
+@media (max-width:389px){.brand{font-size:.95rem}.bar{gap:8px;padding-left:14px}.lang button{padding:6px 9px}}
 
-/* ---------- Hero stage ---------- */
-.stage{position:relative;isolation:isolate;overflow:hidden;background:
-  radial-gradient(60% 50% at 70% 30%,rgba(255,45,88,.28),transparent 70%),
-  radial-gradient(50% 40% at 10% 80%,rgba(61,214,195,.16),transparent 70%),
-  var(--stage);color:var(--stage-ink);padding-top:calc(env(safe-area-inset-top,0px) + 92px)}
-.stage::before{content:"";position:absolute;inset:0;z-index:-1;background-image:linear-gradient(rgba(255,255,255,.04) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,.04) 1px,transparent 1px);background-size:32px 32px;mask-image:radial-gradient(80% 70% at 50% 40%,#000,transparent)}
-#heart3d{position:absolute;z-index:-1;inset:0;width:100%;height:100%;display:block}
-.hero{display:grid;grid-template-columns:minmax(0,1fr);gap:28px;padding-bottom:28px}
-.eyebrow{display:inline-flex;align-items:center;gap:8px;padding:7px 12px;border-radius:999px;border:1px solid var(--stage-line);background:rgba(255,255,255,.05);color:#d8dcea;backdrop-filter:blur(6px)}
-.eyebrow .dot{width:7px;height:7px;border-radius:50%;background:#ff4f72;box-shadow:0 0 0 0 rgba(255,79,114,.7);animation:ping .833s infinite}
-.role,.lede{text-shadow:0 2px 18px rgba(5,7,14,.85)}
-.hero h1{filter:drop-shadow(0 2px 14px rgba(5,7,14,.75))}
-@media (max-width:389px){.brand{font-size:.9rem;gap:7px}.nav .bar{gap:8px;padding-left:12px}.lang button{padding:6px 9px}}
-.hero h1{font-size:clamp(3rem,13vw,7.2rem);font-weight:800;margin-top:16px;line-height:.95}
-.hero h1 .dr{display:block;font-size:.42em;font-weight:600;letter-spacing:0;color:#ff7a93;margin-bottom:.15em}
-.hero h1 .nm-last{display:block;background:linear-gradient(100deg,#fff 10%,#ffb3c2 45%,#ff4f72 80%);-webkit-background-clip:text;background-clip:text;color:transparent}
-.role{font-family:var(--f-display);font-weight:600;font-size:clamp(1.15rem,4.4vw,1.5rem);color:#e3e6f0;margin:14px 0 0}
-.lede{color:var(--stage-muted);max-width:52ch;margin:14px 0 0;font-size:1.02rem}
-.cta{display:flex;flex-wrap:wrap;gap:10px;margin-top:24px}
-.btn{display:inline-flex;align-items:center;justify-content:center;gap:10px;padding:14px 22px;border-radius:999px;font-weight:700;font-size:.97rem;text-decoration:none;cursor:pointer;font-family:inherit;border:1px solid transparent;transition:transform .2s,box-shadow .2s;flex:1 1 200px}
-.btn.primary{background:linear-gradient(135deg,#ff4f72,#d3123f);color:#fff;box-shadow:0 12px 30px -10px rgba(255,45,88,.7),inset 0 1px 0 rgba(255,255,255,.3)}
-.btn.ghost{background:rgba(255,255,255,.06);border-color:rgba(255,255,255,.18);color:#fff;backdrop-filter:blur(8px)}
-.btn:hover{transform:translateY(-2px)}
-.btn.primary:hover{box-shadow:0 18px 40px -10px rgba(255,45,88,.85)}
+/* ---------- Hero ---------- */
+.hero{position:relative;padding-top:calc(env(safe-area-inset-top,0px) + 76px)}
+.hero::before{content:"";position:absolute;inset:0;z-index:-1;background:radial-gradient(70% 55% at 72% 34%,rgba(200,29,58,.26),transparent 70%),radial-gradient(55% 45% at 18% 70%,rgba(111,155,255,.14),transparent 70%)}
+.hero-grid{position:relative;display:grid;grid-template-columns:minmax(0,1fr)}
+#a-heart{width:100%;height:78vw;max-height:440px;margin-bottom:-20vw}
+.hero-copy{perspective:900px}
+h1{font-size:clamp(3.3rem,15.5vw,10.2rem);line-height:.86;font-weight:500;transform-style:preserve-3d;transform:rotateX(var(--hx,0deg)) rotateY(var(--hy,0deg));transition:transform .4s ease-out;text-shadow:0 4px 40px rgba(11,10,28,.75)}
+h1 .dr{display:block;font-style:italic;font-size:.3em;line-height:1.3;color:var(--artery);letter-spacing:0}
+h1 .ln{display:block;white-space:nowrap}
+h1 .ln:last-child{margin-left:.5em}
+h1 .ch{display:inline-block;transform-origin:50% 100%}
+.js h1 .ch{animation:flip 1s var(--ease) both;animation-delay:calc(var(--i) * 46ms + .25s)}
+.role{font-family:var(--f-display);font-style:italic;font-size:clamp(1.3rem,4.6vw,1.8rem);margin-top:26px}
+.lede{color:var(--mute);max-width:50ch;margin-top:12px;text-shadow:0 2px 16px rgba(11,10,28,.9)}
+.cta{display:flex;flex-wrap:wrap;gap:10px;margin-top:26px}
+.btn{position:relative;display:inline-flex;align-items:center;justify-content:center;padding:15px 26px;border-radius:999px;font:600 .98rem var(--f-body);text-decoration:none;cursor:pointer;border:1px solid transparent;flex:1 1 200px;transition:transform .25s var(--ease),box-shadow .25s,background .25s}
+.btn.primary{background:var(--artery);color:#1a0308;box-shadow:0 14px 36px -12px rgba(255,68,88,.8)}
+.btn.primary::before{content:"";position:absolute;inset:-1px;border-radius:inherit;border:1px solid var(--artery);animation:ring 1.666s ease-out infinite;pointer-events:none}
+.btn.ghost{border-color:var(--line);background:rgba(244,237,229,.05);backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px)}
+.btn:hover{transform:translate(var(--mx,0),calc(var(--my,0px) - 2px))}
+.btn.ghost:hover{background:rgba(244,237,229,.12)}
 
-/* 3D portrait card */
-.scene{perspective:1100px;display:grid;place-items:center}
-.card3d{position:relative;width:min(84%,360px);transform-style:preserve-3d;transform:rotateX(var(--rx,0deg)) rotateY(var(--ry,0deg));transition:transform .25s ease-out;animation:sway 7s ease-in-out infinite}
-.card3d.live{animation:none}
-.card3d .photo{position:relative;border-radius:28px;overflow:hidden;aspect-ratio:4/5;box-shadow:0 40px 80px -30px rgba(0,0,0,.8),0 0 0 1px rgba(255,255,255,.14);transform:translateZ(0)}
-.card3d .photo img{display:block;width:100%;height:100%;object-fit:cover}
-.card3d .photo::after{content:"";position:absolute;inset:0;background:radial-gradient(60% 50% at var(--gx,30%) var(--gy,20%),rgba(255,255,255,.28),transparent 60%);mix-blend-mode:soft-light;pointer-events:none}
-.chip{position:absolute;display:flex;align-items:center;gap:10px;padding:10px 14px;border-radius:16px;background:rgba(12,16,30,.72);border:1px solid rgba(255,255,255,.16);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);box-shadow:0 20px 40px -18px rgba(0,0,0,.8);color:#fff;white-space:nowrap}
-.chip b{font-family:var(--f-display);font-size:1.25rem;line-height:1}
-.chip small{display:block;font-family:var(--f-mono);font-size:.62rem;letter-spacing:.1em;color:#aab2c8;text-transform:uppercase}
-.chip.md{left:-8px;top:46%;transform:translateZ(70px)}
-.chip.hr{right:-6px;bottom:-16px;transform:translateZ(90px)}
-.chip.hr b{color:#ff6b88;font-variant-numeric:tabular-nums}
-.chip.hr svg{animation:beat .833s infinite}
-
-/* ECG + stats */
-.ecg{position:relative;height:64px;margin-top:4px}
-.ecg svg{width:100%;height:100%;display:block}
-.ecg path{fill:none;stroke:#ff4f72;stroke-width:2;stroke-linejoin:round;stroke-linecap:round}
-.ecg path.base{stroke-opacity:.18}
-.ecg path.sweep{stroke-width:2.6;stroke-dasharray:var(--seg,320) var(--len,2400);animation:sweep 4.165s linear infinite;filter:drop-shadow(0 0 6px #ff4f72)}
-.facts{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px;padding-bottom:40px}
-.facts div{padding:16px;border-radius:18px;background:rgba(255,255,255,.05);border:1px solid var(--stage-line);backdrop-filter:blur(8px)}
-.facts b{display:block;font-family:var(--f-display);font-weight:800;font-size:clamp(1.9rem,8vw,2.6rem);line-height:1;font-variant-numeric:tabular-nums;background:linear-gradient(180deg,#fff,#ffb3c2);-webkit-background-clip:text;background-clip:text;color:transparent}
-.facts span{display:block;color:var(--stage-muted);font-size:.86rem;margin-top:6px;line-height:1.4}
+.monitor{margin-top:44px;display:grid;grid-template-columns:minmax(0,1fr);border-block:1px solid var(--line);background:linear-gradient(90deg,rgba(11,10,28,.5),rgba(11,10,28,.15))}
+.monitor canvas{width:100%;height:84px;display:block}
+.readout{display:flex;gap:26px;align-items:baseline;padding:8px 0 12px;font-size:.82rem;color:var(--mute)}
+.readout b{font-family:var(--f-display);font-weight:500;font-size:2.1rem;line-height:1;color:var(--artery);font-variant-numeric:tabular-nums;margin-right:6px}
+.facts{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:26px 20px;padding-block:36px 24px;margin:0}
+.facts div{min-width:0}
+.facts dt{font-family:var(--f-display);font-size:clamp(2.6rem,9vw,4.2rem);line-height:1;font-variant-numeric:tabular-nums lining-nums}
+.facts dd{margin:8px 0 0;color:var(--mute);font-size:.9rem;line-height:1.4;max-width:22ch}
 @media (min-width:900px){
-  .hero{grid-template-columns:minmax(0,1.15fr) minmax(0,.85fr);align-items:center;gap:48px;padding-bottom:40px}
+  .hero{padding-top:calc(env(safe-area-inset-top,0px) + 120px)}
+  #a-heart{position:absolute;right:-2%;top:-40px;width:min(54%,640px);height:auto;aspect-ratio:1;max-height:none;margin:0}
   .cta .btn{flex:0 0 auto}
-  .facts{grid-template-columns:repeat(4,minmax(0,1fr));gap:14px}
+  .monitor{grid-template-columns:minmax(0,1fr) auto;gap:28px;align-items:center;margin-top:56px}
+  .readout{padding:0 4px 0 0}
+  .facts{grid-template-columns:repeat(4,minmax(0,1fr));padding-block:48px 30px}
 }
 
 /* ---------- Sections ---------- */
 main{overflow-x:clip}
-main section.block{padding-block:clamp(52px,10vw,120px);position:relative}
-.alt{background:linear-gradient(180deg,transparent,var(--surface-2) 12%,var(--surface-2) 88%,transparent)}
-.sec{display:grid;grid-template-columns:minmax(0,1fr);gap:18px}
-.sec>.label{justify-self:start;display:inline-flex;gap:8px;align-items:center;margin:0;padding:7px 14px;border-radius:999px;background:var(--surface);border:1px solid var(--line);color:var(--muted);box-shadow:var(--shadow)}
-.sec>.label b{color:var(--rose);font-weight:500}
-.sec h2{font-size:clamp(2.1rem,8.5vw,3.8rem);max-width:20ch}
-.sec h2 em{font-style:normal;background:linear-gradient(100deg,var(--rose),var(--teal));-webkit-background-clip:text;background-clip:text;color:transparent}
-.prose{max-width:62ch;margin-top:8px}
-.prose p{margin:0 0 1em;color:var(--muted)}
-.prose p:first-child{color:var(--ink)}
-blockquote{margin:22px 0 0;padding:22px 22px 22px 24px;border-radius:var(--r);background:var(--surface);border:1px solid var(--line);box-shadow:var(--shadow);font-family:var(--f-display);font-weight:600;font-size:1.25rem;line-height:1.35;position:relative}
-blockquote::before{content:"“";position:absolute;top:-22px;left:14px;font-size:4rem;line-height:1;color:var(--rose)}
-.about-grid{display:grid;grid-template-columns:minmax(0,1fr);gap:28px;margin-top:20px}
-.or{margin:0;perspective:1000px}
-.or img{display:block;width:100%;height:auto;aspect-ratio:4/5;object-fit:cover;border-radius:var(--r);box-shadow:var(--shadow)}
-.or figcaption{color:var(--muted);margin-top:10px}
-@media (min-width:900px){.sec{grid-template-columns:minmax(0,1fr)}.about-grid{grid-template-columns:minmax(0,1.1fr) minmax(0,.9fr);align-items:start}}
+main section.block{padding-block:clamp(64px,11vw,140px);position:relative}
+h2{font-size:clamp(2.3rem,7.4vw,4.6rem);max-width:17ch}
+h2 i{font-weight:400}
+.sub{color:var(--mute);margin-top:16px;max-width:52ch}
+.rv{transform-origin:50% 100%}
+.js .rv{opacity:0;transform:perspective(1100px) rotateX(22deg) translateY(46px) scale(.97);transition:opacity .9s var(--ease),transform 1s var(--ease);transition-delay:calc(var(--d,0) * 90ms)}
+.js .rv.in{opacity:1;transform:none}
 
-/* tilt cards */
-.tilt{transform:perspective(900px) rotateX(var(--rx,0deg)) rotateY(var(--ry,0deg)) translateZ(0);transition:transform .25s ease-out,box-shadow .25s;transform-style:preserve-3d;will-change:transform}
-.tilt:hover{box-shadow:0 30px 60px -28px rgba(224,23,74,.45)}
+/* About */
+.about-grid{display:grid;grid-template-columns:minmax(0,1fr);gap:44px;margin-top:40px}
+.prose{display:grid;gap:1.1em;max-width:60ch;align-content:start}
+.prose p{color:var(--mute)}
+.prose p.lead{color:var(--bone);font-size:1.12rem}
+.depth{perspective:1200px;margin:0}
+.depth-in{position:relative;transform-style:preserve-3d;transform:rotateX(var(--rx,0deg)) rotateY(var(--ry,0deg));will-change:transform}
+.depth-in::before{content:"";position:absolute;inset:0;border:1px solid var(--artery);border-radius:6px;transform:translate3d(18px,18px,-60px);opacity:.7}
+.depth[data-dir="-1"] .depth-in::before{border-color:var(--vein);transform:translate3d(-18px,18px,-60px)}
+.depth .ph{overflow:hidden;border-radius:6px;aspect-ratio:4/5;box-shadow:0 50px 90px -40px rgba(0,0,0,.9)}
+.depth .ph img{width:100%;height:100%;object-fit:cover;transform:translateY(var(--py,0px)) scale(1.14)}
+.depth figcaption{position:absolute;left:-10px;bottom:26px;padding:10px 16px;background:var(--bone);color:var(--night);font-size:.84rem;font-weight:600;border-radius:4px;transform:translateZ(70px);box-shadow:0 20px 40px -18px rgba(0,0,0,.8)}
+.depth[data-dir="-1"] figcaption{left:auto;right:-10px}
+blockquote{margin:0;font-family:var(--f-display);font-style:italic;font-size:clamp(1.7rem,5.4vw,2.9rem);line-height:1.15;align-self:center}
+blockquote::before{content:"";display:block;width:64px;height:2px;background:var(--artery);margin-bottom:22px}
+@media (min-width:900px){
+  .about-grid{grid-template-columns:minmax(0,.8fr) minmax(0,1.2fr);gap:70px 90px;align-items:center;margin-top:64px}
+  .about-grid .depth{max-width:440px}
+  .about-grid .depth[data-dir="-1"]{justify-self:end;width:100%}
+  .about-grid blockquote{order:3}.about-grid .depth[data-dir="-1"]{order:4}
+  .about-grid{grid-template-columns:repeat(12,minmax(0,1fr))}
+  .about-grid>:nth-child(1){grid-column:1/6}.about-grid>:nth-child(2){grid-column:7/13}
+  .about-grid>blockquote{grid-column:1/8}.about-grid>.depth[data-dir="-1"]{grid-column:8/13}
+}
 
-.proc{list-style:none;padding:0;margin:20px 0 0;display:grid;gap:14px;grid-template-columns:minmax(0,1fr)}
-.proc li{position:relative;padding:22px;border-radius:var(--r);background:var(--surface);border:1px solid var(--line);box-shadow:var(--shadow);display:flex;flex-direction:column;gap:8px;overflow:hidden}
-.proc li::before{content:"";position:absolute;width:140px;height:140px;right:-50px;top:-50px;border-radius:50%;background:radial-gradient(circle,color-mix(in srgb,var(--rose) 22%,transparent),transparent 70%)}
-.proc .code{align-self:flex-start;padding:5px 10px;border-radius:999px;background:color-mix(in srgb,var(--rose) 12%,transparent);color:var(--rose)}
-.proc h3{font-size:1.4rem}
-.proc p{margin:0;color:var(--muted);font-size:.95rem}
+/* Expertise */
+.proc{list-style:none;padding:0;margin:44px 0 0;display:grid;gap:16px;grid-template-columns:minmax(0,1fr)}
+.proc li{perspective:900px}
+.card{position:relative;height:100%;padding:26px 24px 28px;border-radius:var(--r);background:var(--glass);border:1px solid var(--line);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);display:grid;gap:10px;align-content:start;transform-style:preserve-3d;transform:rotateX(var(--rx,0deg)) rotateY(var(--ry,0deg));transition:transform .3s ease-out,border-color .3s;overflow:hidden}
+.card::after{content:"";position:absolute;inset:0;background:radial-gradient(240px circle at var(--gx,50%) var(--gy,-40%),rgba(255,68,88,.22),transparent 70%);opacity:0;transition:opacity .3s;pointer-events:none}
+.card:hover{border-color:rgba(255,68,88,.55)}
+.card:hover::after{opacity:1}
+.card svg{width:64px;height:64px;fill:none;stroke:var(--bone);stroke-width:1.6;stroke-linecap:round;stroke-linejoin:round;transform:translateZ(46px);overflow:visible}
+.card svg .a{stroke:var(--artery)}.card svg .v{stroke:var(--vein)}
+.card svg *{stroke-dasharray:1;stroke-dashoffset:0}
+.js .rv .card svg *{stroke-dashoffset:1;transition:stroke-dashoffset 1.6s var(--ease) calc(var(--d,0) * 90ms + .3s)}
+.js .rv.in .card svg *{stroke-dashoffset:0}
+.card .code{font-family:var(--f-display);font-style:italic;font-size:1.05rem;color:var(--artery);transform:translateZ(20px)}
+.card h3{font-size:1.65rem;transform:translateZ(30px)}
+.card p{color:var(--mute);font-size:.96rem;transform:translateZ(14px)}
 @media (min-width:640px){.proc{grid-template-columns:repeat(2,minmax(0,1fr))}}
-@media (min-width:1000px){.proc{grid-template-columns:repeat(3,minmax(0,1fr))}}
+@media (min-width:1000px){.proc{grid-template-columns:repeat(3,minmax(0,1fr));gap:20px}}
 
-.tl{list-style:none;margin:20px 0 0;padding:0 0 0 22px;position:relative;display:grid;gap:14px}
-.tl::before{content:"";position:absolute;left:5px;top:8px;bottom:8px;width:2px;border-radius:2px;background:linear-gradient(180deg,var(--rose),var(--teal))}
-.tl li{position:relative;padding:18px 20px;border-radius:var(--r);background:var(--surface);border:1px solid var(--line);box-shadow:var(--shadow)}
-.tl li::before{content:"";position:absolute;left:-23px;top:24px;width:12px;height:12px;border-radius:50%;background:var(--bg);border:3px solid var(--rose);box-shadow:0 0 0 4px color-mix(in srgb,var(--rose) 20%,transparent)}
-.tl .yr{display:inline-block;font-family:var(--f-mono);font-size:.78rem;color:var(--teal);margin-bottom:4px}
-.tl h3{font-size:1.25rem}
-.tl p{margin:4px 0 0;color:var(--muted);font-size:.95rem}
-.members{display:flex;flex-wrap:wrap;gap:8px;margin-top:22px}
-.members span{padding:9px 14px;border-radius:999px;background:var(--surface);border:1px solid var(--line);font-size:.88rem;font-weight:600}
+/* Career */
+.tl{list-style:none;margin:48px 0 0;padding:0;position:relative;display:grid;gap:38px}
+.tl::before,.tl::after{content:"";position:absolute;left:5px;top:10px;bottom:10px;width:2px;border-radius:2px;background:var(--line)}
+.tl::after{background:linear-gradient(180deg,var(--artery),var(--vein));transform-origin:50% 0;transform:scaleY(var(--fill,0))}
+.tl li{position:relative;padding-left:34px;display:grid;gap:6px}
+.tl li::before{content:"";position:absolute;left:0;top:.7rem;width:12px;height:12px;border-radius:50%;background:var(--night);border:2px solid var(--mute);z-index:1;transition:border-color .4s,background .4s,box-shadow .4s}
+.tl li.on::before{border-color:var(--artery);background:var(--artery);box-shadow:0 0 0 6px rgba(255,68,88,.2),0 0 22px var(--artery)}
+.tl .yr{font-family:var(--f-display);font-style:italic;font-size:clamp(1.5rem,5vw,2.2rem);line-height:1.1;color:var(--mute);font-variant-numeric:lining-nums;transition:color .4s}
+.tl li.on .yr{color:var(--bone)}
+.tl h3{font-size:clamp(1.4rem,4.4vw,1.9rem);line-height:1.12}
+.tl p{color:var(--mute);margin-top:6px;max-width:56ch}
+.members{margin-top:54px;color:var(--mute);max-width:70ch;border-top:1px solid var(--line);padding-top:22px}
+.members strong{color:var(--bone);font-weight:600}
+@media (min-width:900px){
+  .tl{gap:54px}
+  .tl::before,.tl::after{left:calc(240px + 5px)}
+  .tl li{padding-left:0;grid-template-columns:200px minmax(0,1fr);gap:0 86px;align-items:baseline}
+  .tl li::before{left:240px}
+  .tl .yr{text-align:right}
+}
 
-.conf{margin-top:20px}
-.conf table,.conf tbody{display:block;width:100%}
-.conf thead{display:none}
-.conf tbody{display:grid;gap:12px}
-.conf tr{display:grid;grid-template-columns:auto minmax(0,1fr) auto;gap:8px 12px;align-items:center;padding:18px 20px;border-radius:var(--r);background:var(--surface);border:1px solid var(--line);box-shadow:var(--shadow)}
-.conf td{display:block;padding:0}
-.conf td:first-child{font-family:var(--f-mono);font-size:.8rem;color:var(--teal)}
-.conf td:nth-child(2){grid-column:1/-1;grid-row:2}
-.conf td:nth-child(3){grid-row:1;grid-column:2;color:var(--muted);font-size:.85rem}
-.conf td:nth-child(4){grid-row:1;grid-column:3}
-.conf .ev{display:block;font-family:var(--f-display);font-weight:700;font-size:1.12rem;line-height:1.25}
-.conf .tt{display:block;color:var(--muted);font-size:.93rem;margin-top:4px}
-.pill{display:inline-block;font-family:var(--f-mono);font-size:.64rem;letter-spacing:.08em;text-transform:uppercase;padding:5px 10px;border-radius:999px;white-space:nowrap;font-weight:500}
-.pill.oral{background:color-mix(in srgb,var(--rose) 14%,transparent);color:var(--rose)}
-.pill.panel,.pill.inv{background:color-mix(in srgb,var(--teal) 14%,transparent);color:var(--teal)}
-.pill.poster{background:var(--surface-2);color:var(--muted)}
-@media (min-width:900px){.conf tbody{grid-template-columns:repeat(2,minmax(0,1fr))}}
+/* Conferences */
+.conf{display:grid;grid-template-columns:minmax(0,1fr);gap:8px;margin-top:28px}
+.globe-col{display:grid;justify-items:center}
+#a-globe{width:min(100%,460px);aspect-ratio:1;max-height:52vh}
+.globe-cap{font-family:var(--f-display);font-style:italic;font-size:1.5rem;min-height:1.6em;text-align:center}
+.globe-cap small{font-family:var(--f-body);font-style:normal;font-size:.84rem;color:var(--mute);display:block}
+.rows{list-style:none;margin:0;padding:0}
+.rows li{cursor:pointer;display:grid;grid-template-columns:auto minmax(0,1fr);gap:4px 16px;padding:18px 18px;border-top:1px solid var(--line);position:relative;transition:background .35s,transform .35s var(--ease)}
+.rows li::before{content:"";position:absolute;left:0;top:-1px;bottom:0;width:2px;background:var(--artery);transform:scaleY(0);transition:transform .35s var(--ease)}
+.rows li.act{background:var(--glass)}
+.rows li.act::before{transform:none}
+.rows .y{font-family:var(--f-display);font-style:italic;font-size:1.3rem;color:var(--artery);font-variant-numeric:lining-nums tabular-nums}
+.rows .where{color:var(--mute);font-size:.88rem;justify-self:end;display:flex;gap:10px;align-items:center}
+.rows .ev{grid-column:1/-1;font-family:var(--f-display);font-size:1.35rem;line-height:1.18}
+.rows .tt{grid-column:1/-1;color:var(--mute);font-size:.94rem}
+.pill{font-size:.72rem;font-weight:600;padding:3px 10px;border-radius:999px;border:1px solid var(--line);color:var(--bone);white-space:nowrap}
+.pill.oral{border-color:var(--artery);color:var(--artery)}
+.pill.panel{border-color:var(--vein);color:var(--vein)}
+@media (max-width:899px){
+  .rows{display:flex;gap:12px;overflow-x:auto;scroll-snap-type:x mandatory;scrollbar-width:none;margin-inline:calc(-1 * var(--gut));padding:6px var(--gut) 14px;scroll-padding-inline:var(--gut)}
+  .rows::-webkit-scrollbar{display:none}
+  .rows li{flex:0 0 84%;scroll-snap-align:center;border:1px solid var(--line);border-radius:var(--r);background:rgba(24,22,52,.35);align-content:start;min-height:190px}
+  .rows li::before{display:none}
+  .rows li.act{border-color:var(--artery);background:var(--glass)}
+  .swipe{color:var(--mute);font-size:.84rem;text-align:center}
+}
+@media (min-width:900px){
+  .conf{grid-template-columns:minmax(0,1.15fr) minmax(0,.85fr);gap:60px;align-items:start;margin-top:48px}
+  .globe-col{order:2;position:sticky;top:calc(50vh - 290px)}
+  #a-globe{max-height:none}
+  .rows li{grid-template-columns:4.2rem minmax(0,1fr) auto;align-items:baseline;padding:20px 22px}
+  .rows .ev{grid-column:2;grid-row:1}.rows .where{grid-column:3;grid-row:1}.rows .tt{grid-column:2/-1}
+  .rows li.act{transform:translateX(10px)}
+  .swipe{display:none}
+}
 
-.pubs{list-style:none;margin:20px 0 0;padding:0;display:grid;gap:12px}
-.pubs li{display:grid;gap:6px;padding:20px;border-radius:var(--r);background:var(--surface);border:1px solid var(--line);box-shadow:var(--shadow)}
-.pubs .t{font-family:var(--f-display);font-weight:600;font-size:1.15rem;line-height:1.3}
-.pubs .a{color:var(--muted);font-size:.9rem}
-.pubs .j{color:var(--teal);order:-1}
+/* Publications */
+.pubs{list-style:none;margin:44px 0 0;padding:0}
+.pubs li{display:grid;gap:8px;padding:26px 0;border-top:1px solid var(--line);grid-template-columns:minmax(0,1fr)}
+.pubs .j{color:var(--vein);font-size:.9rem;font-weight:500}
+.pubs .t{font-family:var(--f-display);font-size:clamp(1.3rem,4vw,1.85rem);line-height:1.18;max-width:36ch;transition:transform .4s var(--ease)}
+.pubs .a{color:var(--mute);font-size:.92rem}
+.pubs li:hover .t{transform:translateX(12px)}
+@media (min-width:900px){.pubs li{grid-template-columns:300px minmax(0,1fr);gap:6px 40px}.pubs .j{grid-row:1/3;padding-top:.5em}}
 
-.contact{display:grid;grid-template-columns:minmax(0,1fr);gap:18px;margin-top:20px}
-.info{display:grid;gap:12px;align-content:start}
-.info>div{padding:16px 18px;border-radius:18px;background:var(--surface);border:1px solid var(--line)}
-.info .mono{color:var(--muted);display:block;margin-bottom:4px}
-.info p{margin:0;font-size:1.02rem;font-weight:600}
-.info .row{display:flex;gap:10px;align-items:center;flex-wrap:wrap}
-.copy{all:unset;cursor:pointer;font-family:var(--f-mono);font-size:.66rem;letter-spacing:.08em;text-transform:uppercase;color:var(--rose);padding:4px 10px;border-radius:999px;background:color-mix(in srgb,var(--rose) 12%,transparent)}
-.hours{display:grid;grid-template-columns:auto 1fr;gap:4px 18px;font-variant-numeric:tabular-nums;font-weight:600}
-form{display:grid;gap:14px;padding:22px;border-radius:26px;background:var(--surface);border:1px solid var(--line);box-shadow:var(--shadow)}
-form .two{display:grid;gap:14px}
-label{display:grid;gap:6px;font-size:.88rem;font-weight:700}
-input,select,textarea{font:inherit;font-weight:500;color:var(--ink);background:var(--surface-2);border:1px solid var(--line);border-radius:14px;padding:13px 14px;width:100%}
+/* Contact */
+#a-heart2{width:200px;height:200px;margin:0 auto 6px}
+.contact{display:grid;grid-template-columns:minmax(0,1fr);gap:36px;margin-top:40px}
+.info{margin:0;display:grid;align-content:start}
+.info>div{padding:16px 0;border-top:1px solid var(--line);display:grid;gap:4px}
+.info dt{color:var(--mute);font-size:.84rem}
+.info dd{margin:0;font-size:1.06rem;font-weight:500;display:flex;gap:12px;align-items:center;flex-wrap:wrap}
+.copy{all:unset;cursor:pointer;font-size:.74rem;font-weight:600;color:var(--artery);padding:3px 11px;border-radius:999px;border:1px solid var(--artery)}
+.copy:focus-visible{outline:2px solid var(--vein)}
+.hours{display:grid;grid-template-columns:auto 1fr;gap:2px 18px;font-variant-numeric:tabular-nums}
+.formwrap{perspective:1200px}
+form{display:grid;gap:16px;padding:26px 22px;border-radius:22px;background:var(--glass);border:1px solid var(--line);backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px);transform:rotateX(var(--rx,0deg)) rotateY(var(--ry,0deg));transition:transform .3s ease-out}
+form .two{display:grid;gap:16px}
+label{display:grid;gap:6px;font-size:.88rem;font-weight:600}
+input,select,textarea{font:inherit;font-weight:400;color:var(--bone);background:rgba(11,10,28,.6);border:1px solid var(--line);border-radius:12px;padding:13px 14px;width:100%;transition:border-color .2s,box-shadow .2s}
 textarea{min-height:110px;resize:vertical}
-input:focus,select:focus,textarea:focus{outline:2px solid var(--rose);outline-offset:0;border-color:transparent}
-form .btn{justify-self:stretch}
-.note{color:var(--teal);font-size:.92rem;margin:0;font-weight:600}
-@media (min-width:640px){form .two{grid-template-columns:1fr 1fr}form .btn{justify-self:start}}
-@media (min-width:900px){.contact{grid-template-columns:minmax(0,.85fr) minmax(0,1.15fr);gap:28px}}
+input:focus,select:focus,textarea:focus{outline:none;border-color:var(--artery);box-shadow:0 0 0 4px rgba(255,68,88,.18)}
+.note{color:var(--vein);font-size:.94rem;font-weight:500}
+@media (min-width:640px){form .two{grid-template-columns:1fr 1fr}form .btn{justify-self:start;flex:none}form{padding:32px}}
+@media (min-width:900px){
+  .contact-head{display:grid;grid-template-columns:auto minmax(0,1fr);gap:30px;align-items:center}
+  #a-heart2{width:230px;height:230px;margin:0 0 0 -30px}
+  .contact{grid-template-columns:minmax(0,.8fr) minmax(0,1.2fr);gap:70px}
+}
 
-/* phone: sticky booking bar once the hero is scrolled past */
-.dock{position:fixed;z-index:19;left:12px;right:12px;bottom:calc(env(safe-area-inset-bottom,0px) + 12px);display:flex;gap:8px;padding:8px;border-radius:999px;
-  background:rgba(10,13,24,.78);backdrop-filter:blur(18px) saturate(1.4);-webkit-backdrop-filter:blur(18px) saturate(1.4);border:1px solid rgba(255,255,255,.14);box-shadow:0 14px 40px -12px rgba(0,0,0,.6);
-  transform:translateY(140%);transition:transform .35s cubic-bezier(.2,.8,.2,1)}
+.dock{position:fixed;z-index:19;left:max(12px,env(safe-area-inset-left,0px));right:max(12px,env(safe-area-inset-right,0px));bottom:calc(env(safe-area-inset-bottom,0px) + 12px);display:flex;gap:8px;padding:8px;border-radius:999px;background:rgba(11,10,28,.8);backdrop-filter:blur(18px);-webkit-backdrop-filter:blur(18px);border:1px solid var(--line);transform:translateY(160%);transition:transform .4s var(--ease)}
 .dock.show{transform:none}
 .dock .btn{padding:12px 16px;font-size:.92rem}
+.dock .btn.primary::before{display:none}
 .dock .btn.ghost{flex:0 0 auto}
 @media (min-width:900px){.dock{display:none}}
-footer{padding-bottom:calc(env(safe-area-inset-bottom,0px) + 96px)}
-@media (min-width:900px){footer{padding-bottom:28px}}
-footer{padding-top:28px;color:var(--muted);font-size:.85rem;border-top:1px solid var(--line)}
+footer{padding-block:28px calc(env(safe-area-inset-bottom,0px) + 100px);color:var(--mute);font-size:.86rem;border-top:1px solid var(--line);background:rgba(11,10,28,.7)}
 footer .wrap{display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap}
+@media (min-width:900px){footer{padding-bottom:28px}}
 
-/* motion */
 @keyframes beat{0%,100%{transform:scale(1)}12%{transform:scale(1.22)}24%{transform:scale(1)}36%{transform:scale(1.12)}}
-@keyframes ping{0%{box-shadow:0 0 0 0 rgba(255,79,114,.7)}100%{box-shadow:0 0 0 10px rgba(255,79,114,0)}}
-@keyframes sway{0%,100%{transform:rotateX(4deg) rotateY(-10deg)}50%{transform:rotateX(-3deg) rotateY(10deg)}}
-@keyframes sweep{from{stroke-dashoffset:var(--seg,320)}to{stroke-dashoffset:calc(-1 * var(--len,2400))}}
-@keyframes rise{from{opacity:0;transform:perspective(900px) rotateX(16deg) translateY(48px) scale(.97)}to{opacity:1;transform:none}}
-@media (prefers-reduced-motion:no-preference){
-  @supports (animation-timeline: view()){
-    .reveal{animation:rise linear both;animation-timeline:view();animation-range:entry 0% cover 28%}
-  }
-}
+@keyframes ring{0%{transform:scale(1);opacity:.9}70%,100%{transform:scale(1.18,1.5);opacity:0}}
+@keyframes flip{from{opacity:0;transform:rotateX(-92deg) translateY(.35em)}to{opacity:1;transform:none}}
 @media (prefers-reduced-motion:reduce){
   html{scroll-behavior:auto}
-  .card3d,.brand svg,.chip.hr svg,.eyebrow .dot{animation:none}
-  .ecg path.sweep{display:none}.ecg path.base{stroke-opacity:1}
-  .tilt,.btn{transition:none}
+  .brand svg,.btn.primary::before{animation:none}
+  .js h1 .ch{animation:none}
+  .js .rv{opacity:1;transform:none;transition:none}
+  .js .rv .card svg *{stroke-dashoffset:0;transition:none}
+  h1,.card,form,.btn{transition:none}
 }
 </style>
 </head>
 <body>
-
+<canvas id="gl" aria-hidden="true"></canvas>
 <div id="site" data-lang="en">
 
 <header class="nav">
-  <div class="bar">
+  <div class="bar" id="bar">
     <a class="brand" href="#top" aria-label="Home">
-      <svg width="22" height="20" viewBox="0 0 22 20" aria-hidden="true"><path d="M11 19S1 12.6 1 6.2C1 3.3 3.2 1 6 1c2 0 3.7 1.1 5 3 1.3-1.9 3-3 5-3 2.8 0 5 2.3 5 5.2C21 12.6 11 19 11 19Z" fill="#ff4f72"/><path d="M3 9h4l1.5-3 2.5 7 2-5 1 1h5" fill="none" stroke="#fff" stroke-width="1.4" stroke-linejoin="round"/></svg>
+      <svg width="22" height="20" viewBox="0 0 22 20" aria-hidden="true"><path d="M11 19S1 12.6 1 6.2C1 3.3 3.2 1 6 1c2 0 3.7 1.1 5 3 1.3-1.9 3-3 5-3 2.8 0 5 2.3 5 5.2C21 12.6 11 19 11 19Z" fill="#ff4458"/><path d="M3 9h4l1.5-3 2.5 7 2-5 1 1h5" fill="none" stroke="#fff" stroke-width="1.4" stroke-linejoin="round"/></svg>
       <span>Dr. <span class="nm-full">Rojina Bozorginia</span></span>
     </a>
     <nav class="links" aria-label="Sections">
@@ -252,6 +282,7 @@ footer .wrap{display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap}
       <a href="#expertise"><span data-l="en">Expertise</span><span data-l="tr">Uzmanlık</span></a>
       <a href="#career"><span data-l="en">Career</span><span data-l="tr">Kariyer</span></a>
       <a href="#conferences"><span data-l="en">Conferences</span><span data-l="tr">Kongreler</span></a>
+      <a href="#publications"><span data-l="en">Research</span><span data-l="tr">Araştırma</span></a>
       <a href="#contact"><span data-l="en">Contact</span><span data-l="tr">İletişim</span></a>
     </nav>
     <div class="lang" role="group" aria-label="Language">
@@ -270,157 +301,159 @@ footer .wrap{display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap}
   </nav>
 </header>
 
-<main id="top">
-  <section class="stage">
-    <canvas id="heart3d" aria-hidden="true"></canvas>
-    <div class="wrap hero">
-      <div>
-        <p class="eyebrow mono"><span class="dot"></span><span data-l="en">Cardiovascular Surgery · Istanbul</span><span data-l="tr">Kalp ve Damar Cerrahisi · İstanbul</span></p>
-        <h1><span class="dr">Dr.</span><span class="nm-first">Rojina</span> <span class="nm-last">Bozorginia</span></h1>
-        <p class="role"><span data-l="en">Cardiovascular Surgeon, MD</span><span data-l="tr">Kalp ve Damar Cerrahı, Op. Dr.</span></p>
+<main>
+  <section class="hero" id="top">
+    <div class="wrap hero-grid">
+      <div class="anchor" id="a-heart" aria-hidden="true"></div>
+      <div class="hero-copy">
+        <h1 id="name"><span class="dr">Dr.</span><span class="ln nm-first">Rojina</span><span class="ln nm-last">Bozorginia</span></h1>
+        <p class="role"><span data-l="en">Cardiovascular surgeon in Istanbul</span><span data-l="tr">Kalp ve damar cerrahı, İstanbul</span></p>
         <p class="lede">
           <span data-l="en">I operate on the heart and the great vessels: coronary bypass, valve repair and aortic surgery. My focus is minimally invasive techniques that get patients home sooner and back to the lives they had.</span>
           <span data-l="tr">Kalp ve büyük damar cerrahisi yapıyorum: koroner bypass, kapak tamiri ve aort cerrahisi. Odak noktam, hastaların daha erken taburcu olmasını ve eski yaşamlarına dönmesini sağlayan minimal invaziv tekniklerdir.</span>
         </p>
         <div class="cta">
-          <a class="btn primary" href="#contact"><span data-l="en">Book a consultation</span><span data-l="tr">Randevu alın</span></a>
-          <a class="btn ghost" href="#conferences"><span data-l="en">Talks &amp; research</span><span data-l="tr">Sunumlar ve araştırma</span></a>
-        </div>
-      </div>
-      <div class="scene">
-        <div class="card3d" id="card3d">
-          <div class="photo"><img src="images/portrait.jpg" alt="Portrait of Dr. Rojina Bozorginia" width="800" height="1000"></div>
-          <div class="chip md"><div><b>MD</b><small>İAÜ · 2027</small></div></div>
-          <div class="chip hr"><svg width="18" height="16" viewBox="0 0 22 20" aria-hidden="true"><path d="M11 19S1 12.6 1 6.2C1 3.3 3.2 1 6 1c2 0 3.7 1.1 5 3 1.3-1.9 3-3 5-3 2.8 0 5 2.3 5 5.2C21 12.6 11 19 11 19Z" fill="#ff4f72"/></svg><div><b id="bpm">72</b><small>bpm · sinus</small></div></div>
+          <a class="btn primary mag" href="#contact"><span data-l="en">Book a consultation</span><span data-l="tr">Randevu alın</span></a>
+          <a class="btn ghost mag" href="#conferences"><span data-l="en">Talks and research</span><span data-l="tr">Sunumlar ve araştırma</span></a>
         </div>
       </div>
     </div>
     <div class="wrap">
-      <div class="ecg" aria-hidden="true">
-        <svg viewBox="0 0 1200 90" preserveAspectRatio="none"><path class="base" d="M0 55 H90 l8 -6 l8 6 H130 l6 8 l10 -52 l10 64 l8 -20 H200 q16 -16 32 0 H330 l8 -6 l8 6 H370 l6 8 l10 -52 l10 64 l8 -20 H440 q16 -16 32 0 H570 l8 -6 l8 6 H610 l6 8 l10 -52 l10 64 l8 -20 H680 q16 -16 32 0 H810 l8 -6 l8 6 H850 l6 8 l10 -52 l10 64 l8 -20 H920 q16 -16 32 0 H1050 l8 -6 l8 6 H1090 l6 8 l10 -52 l10 64 l8 -20 H1160 q16 -16 32 0 H1200"/><path class="sweep" d="M0 55 H90 l8 -6 l8 6 H130 l6 8 l10 -52 l10 64 l8 -20 H200 q16 -16 32 0 H330 l8 -6 l8 6 H370 l6 8 l10 -52 l10 64 l8 -20 H440 q16 -16 32 0 H570 l8 -6 l8 6 H610 l6 8 l10 -52 l10 64 l8 -20 H680 q16 -16 32 0 H810 l8 -6 l8 6 H850 l6 8 l10 -52 l10 64 l8 -20 H920 q16 -16 32 0 H1050 l8 -6 l8 6 H1090 l6 8 l10 -52 l10 64 l8 -20 H1160 q16 -16 32 0 H1200"/></svg>
+      <div class="monitor">
+        <canvas id="ecg" aria-hidden="true"></canvas>
+        <p class="readout"><span><b id="bpm">72</b>bpm</span><span data-l="en">Sinus rhythm</span><span data-l="tr">Sinüs ritmi</span></p>
       </div>
-      <div class="facts">
-        <div><b>640+</b><span data-l="en">open-heart procedures</span><span data-l="tr">açık kalp ameliyatı</span></div>
-        <div><b>14</b><span data-l="en">congress presentations</span><span data-l="tr">kongre sunumu</span></div>
-        <div><b>9</b><span data-l="en">peer-reviewed papers</span><span data-l="tr">hakemli makale</span></div>
-        <div><b>4</b><span data-l="en">languages: Turkish, English, German, Persian</span><span data-l="tr">dil: Türkçe, İngilizce, Almanca, Farsça</span></div>
-      </div>
+      <dl class="facts">
+        <div><dt data-n="640" data-suf="+">640+</dt><dd><span data-l="en">open-heart procedures</span><span data-l="tr">açık kalp ameliyatı</span></dd></div>
+        <div><dt data-n="14">14</dt><dd><span data-l="en">congress presentations</span><span data-l="tr">kongre sunumu</span></dd></div>
+        <div><dt data-n="9">9</dt><dd><span data-l="en">peer-reviewed papers</span><span data-l="tr">hakemli makale</span></dd></div>
+        <div><dt data-n="4">4</dt><dd><span data-l="en">languages: Turkish, English, German, Persian</span><span data-l="tr">dil: Türkçe, İngilizce, Almanca, Farsça</span></dd></div>
+      </dl>
     </div>
   </section>
 
   <section class="block" id="about">
-    <div class="wrap sec">
-      <p class="label mono"><b>01</b><span data-l="en">About</span><span data-l="tr">Hakkında</span></p>
-      <div>
-        <h2><span data-l="en">A surgeon who explains the <em>whole</em> operation before she starts it.</span><span data-l="tr">Ameliyata başlamadan önce her adımı <em>açıkça</em> anlatan bir cerrah.</span></h2>
-        <div class="about-grid">
-          <div class="prose">
-            <p data-l="en">I graduated from Istanbul Aydın University Faculty of Medicine in 2027 and trained in cardiovascular surgery in Istanbul, where I now operate as a specialist. My daily work covers adult cardiac surgery: coronary artery bypass grafting, mitral and aortic valve surgery, and repair of aneurysms and dissections of the aorta.</p>
-            <p data-l="tr">2027 yılında İstanbul Aydın Üniversitesi Tıp Fakültesi'nden mezun oldum ve kalp ve damar cerrahisi uzmanlık eğitimimi İstanbul'da tamamladım. Bugün uzman olarak erişkin kalp cerrahisi alanında çalışıyorum: koroner arter bypass, mitral ve aort kapak cerrahisi, aort anevrizması ve diseksiyonu onarımı.</p>
-            <p data-l="en">Heart surgery is a team decision. I work alongside cardiologists, anaesthetists and perfusionists so that every patient gets the operation that fits their heart, their age and their plans, and I make sure families understand each step from the first consultation to discharge. I consult in Turkish, English, German and Persian, so patients from abroad can talk through their surgery in their own language.</p>
-            <p data-l="tr">Kalp cerrahisi bir ekip kararıdır. Kardiyologlar, anestezistler ve perfüzyonistlerle birlikte çalışarak her hastaya kalbine, yaşına ve planlarına uygun ameliyatı sunuyor; ilk muayeneden taburculuğa kadar her adımı ailelerle birlikte paylaşıyorum. Türkçe, İngilizce, Almanca ve Farsça muayene ediyorum; yurt dışından gelen hastalar ameliyatlarını kendi dillerinde konuşabiliyor.</p>
-            <blockquote><span data-l="en">"Good surgery starts long before the first incision, with a patient who knows exactly what we are going to do together."</span><span data-l="tr">"İyi bir ameliyat, ilk kesiden çok önce, birlikte ne yapacağımızı bilen bir hastayla başlar."</span></blockquote>
+    <div class="wrap">
+      <h2 class="rv"><span data-l="en">A surgeon who explains the whole operation before she starts it.</span><span data-l="tr">Ameliyata başlamadan önce her adımı açıkça anlatan bir cerrah.</span></h2>
+      <div class="about-grid">
+        <figure class="depth" data-dir="1">
+          <div class="depth-in">
+            <div class="ph"><img src="images/portrait.jpg" alt="Dr. Rojina Bozorginia presenting at Istanbul Aydın University" width="800" height="1000"></div>
+            <figcaption><span data-l="en">MD, Istanbul Aydın University, 2027</span><span data-l="tr">Tıp Doktoru, İstanbul Aydın Üniversitesi, 2027</span></figcaption>
           </div>
-          <figure class="or">
-            <img src="images/operating-room.jpg" alt="Dr. Rojina Bozorginia operating in theatre" width="900" height="1200" loading="lazy">
-            <figcaption class="mono"><span data-l="en">Fig. 2 · In theatre</span><span data-l="tr">Şekil 2 · Ameliyathanede</span></figcaption>
-          </figure>
+        </figure>
+        <div class="prose rv">
+          <p class="lead" data-l="en">I graduated from Istanbul Aydın University Faculty of Medicine in 2027 and trained in cardiovascular surgery in Istanbul, where I now operate as a specialist. My daily work covers adult cardiac surgery: coronary artery bypass grafting, mitral and aortic valve surgery, and repair of aneurysms and dissections of the aorta.</p>
+          <p class="lead" data-l="tr">2027 yılında İstanbul Aydın Üniversitesi Tıp Fakültesi'nden mezun oldum ve kalp ve damar cerrahisi uzmanlık eğitimimi İstanbul'da tamamladım. Bugün uzman olarak erişkin kalp cerrahisi alanında çalışıyorum: koroner arter bypass, mitral ve aort kapak cerrahisi, aort anevrizması ve diseksiyonu onarımı.</p>
+          <p data-l="en">Heart surgery is a team decision. I work alongside cardiologists, anaesthetists and perfusionists so that every patient gets the operation that fits their heart, their age and their plans, and I make sure families understand each step from the first consultation to discharge. I consult in Turkish, English, German and Persian, so patients from abroad can talk through their surgery in their own language.</p>
+          <p data-l="tr">Kalp cerrahisi bir ekip kararıdır. Kardiyologlar, anestezistler ve perfüzyonistlerle birlikte çalışarak her hastaya kalbine, yaşına ve planlarına uygun ameliyatı sunuyor; ilk muayeneden taburculuğa kadar her adımı ailelerle birlikte paylaşıyorum. Türkçe, İngilizce, Almanca ve Farsça muayene ediyorum; yurt dışından gelen hastalar ameliyatlarını kendi dillerinde konuşabiliyor.</p>
         </div>
+        <blockquote class="rv"><span data-l="en">Good surgery starts long before the first incision, with a patient who knows exactly what we are going to do together.</span><span data-l="tr">İyi bir ameliyat, ilk kesiden çok önce, birlikte ne yapacağımızı bilen bir hastayla başlar.</span></blockquote>
+        <figure class="depth" data-dir="-1">
+          <div class="depth-in">
+            <div class="ph"><img src="images/operating-room.jpg" alt="Dr. Rojina Bozorginia operating in theatre" width="900" height="1200" loading="lazy"></div>
+            <figcaption><span data-l="en">In theatre</span><span data-l="tr">Ameliyathanede</span></figcaption>
+          </div>
+        </figure>
       </div>
     </div>
   </section>
 
-  <section class="block alt" id="expertise">
-    <div class="wrap sec">
-      <p class="label mono"><b>02</b><span data-l="en">Expertise</span><span data-l="tr">Uzmanlık</span></p>
-      <div>
-        <h2><span data-l="en">Procedures I perform</span><span data-l="tr">Uyguladığım girişimler</span></h2>
-        <ul class="proc">
-          <li><span class="mono code">CABG</span><h3><span data-l="en">Coronary bypass</span><span data-l="tr">Koroner bypass</span></h3><p data-l="en">On-pump and off-pump bypass grafting with arterial conduits for multi-vessel coronary disease.</p><p data-l="tr">Çok damar hastalığında arteriyel greftlerle pompalı ve pompasız (atan kalpte) bypass.</p></li>
-          <li><span class="mono code">MVr / MVR</span><h3><span data-l="en">Mitral valve repair</span><span data-l="tr">Mitral kapak tamiri</span></h3><p data-l="en">Repair first, replacement when needed, including through a small right-chest incision.</p><p data-l="tr">Önce tamir, gerekirse replasman; sağ göğüsten küçük kesiyle yapılabilen yöntemler dahil.</p></li>
-          <li><span class="mono code">AVR</span><h3><span data-l="en">Aortic valve surgery</span><span data-l="tr">Aort kapak cerrahisi</span></h3><p data-l="en">Surgical replacement and valve-sparing operations, with TAVI options discussed by the heart team.</p><p data-l="tr">Cerrahi replasman ve kapak koruyucu ameliyatlar; TAVI seçeneği kalp ekibiyle birlikte değerlendirilir.</p></li>
-          <li><span class="mono code">MICS</span><h3><span data-l="en">Minimally invasive surgery</span><span data-l="tr">Minimal invaziv cerrahi</span></h3><p data-l="en">Smaller incisions, less blood loss and a typical hospital stay of 4–5 days.</p><p data-l="tr">Daha küçük kesi, daha az kan kaybı ve genellikle 4–5 günlük hastanede kalış.</p></li>
-          <li><span class="mono code">TAAA</span><h3><span data-l="en">Aortic surgery</span><span data-l="tr">Aort cerrahisi</span></h3><p data-l="en">Elective repair of thoracic aortic aneurysms and emergency surgery for acute type A dissection.</p><p data-l="tr">Torasik aort anevrizmalarının planlı onarımı ve akut tip A diseksiyonda acil cerrahi.</p></li>
-          <li><span class="mono code">PAD</span><h3><span data-l="en">Peripheral vascular</span><span data-l="tr">Periferik damar</span></h3><p data-l="en">Carotid endarterectomy, peripheral bypass and treatment of varicose veins.</p><p data-l="tr">Karotis endarterektomi, periferik bypass ve varis tedavisi.</p></li>
-        </ul>
-      </div>
+  <section class="block" id="expertise">
+    <div class="wrap">
+      <h2 class="rv"><span data-l="en">Procedures I perform</span><span data-l="tr">Uyguladığım girişimler</span></h2>
+      <ul class="proc">
+        <li class="rv"><div class="card tilt">
+          <svg viewBox="0 0 64 64" aria-hidden="true"><path pathLength="1" d="M8 46c10-2 16-14 24-14s14 12 24 14"/><path pathLength="1" d="M27 30l10 6M37 30l-10 6"/><path class="a" pathLength="1" d="M14 42C14 14 50 14 50 42"/></svg>
+          <span class="code">CABG</span><h3><span data-l="en">Coronary bypass</span><span data-l="tr">Koroner bypass</span></h3><p data-l="en">On-pump and off-pump bypass grafting with arterial conduits for multi-vessel coronary disease.</p><p data-l="tr">Çok damar hastalığında arteriyel greftlerle pompalı ve pompasız (atan kalpte) bypass.</p></div></li>
+        <li class="rv"><div class="card tilt">
+          <svg viewBox="0 0 64 64" aria-hidden="true"><path pathLength="1" d="M10 26C10 8 54 8 54 26c0 20-10 30-22 30S10 46 10 26Z"/><path class="a" pathLength="1" d="M14 30c10 10 26 10 36 0"/><path class="v" pathLength="1" d="M20 22c8 5 16 5 24 0"/></svg>
+          <span class="code">MVr / MVR</span><h3><span data-l="en">Mitral valve repair</span><span data-l="tr">Mitral kapak tamiri</span></h3><p data-l="en">Repair first, replacement when needed, including through a small right-chest incision.</p><p data-l="tr">Önce tamir, gerekirse replasman; sağ göğüsten küçük kesiyle yapılabilen yöntemler dahil.</p></div></li>
+        <li class="rv"><div class="card tilt">
+          <svg viewBox="0 0 64 64" aria-hidden="true"><circle pathLength="1" cx="32" cy="32" r="24"/><path class="a" pathLength="1" d="M32 32V8M32 32l20.8 12M32 32L11.2 44"/><circle class="v" pathLength="1" cx="32" cy="32" r="4"/></svg>
+          <span class="code">AVR</span><h3><span data-l="en">Aortic valve surgery</span><span data-l="tr">Aort kapak cerrahisi</span></h3><p data-l="en">Surgical replacement and valve-sparing operations, with TAVI options discussed by the heart team.</p><p data-l="tr">Cerrahi replasman ve kapak koruyucu ameliyatlar; TAVI seçeneği kalp ekibiyle birlikte değerlendirilir.</p></div></li>
+        <li class="rv"><div class="card tilt">
+          <svg viewBox="0 0 64 64" aria-hidden="true"><path pathLength="1" d="M14 10c-8 14-8 30 0 44M50 10c8 14 8 30 0 44"/><path class="a" pathLength="1" d="M24 32h16"/><path class="v" pathLength="1" d="M26 26v12M32 26v12M38 26v12"/></svg>
+          <span class="code">MICS</span><h3><span data-l="en">Minimally invasive surgery</span><span data-l="tr">Minimal invaziv cerrahi</span></h3><p data-l="en">Smaller incisions, less blood loss and a typical hospital stay of 4–5 days.</p><p data-l="tr">Daha küçük kesi, daha az kan kaybı ve genellikle 4–5 günlük hastanede kalış.</p></div></li>
+        <li class="rv"><div class="card tilt">
+          <svg viewBox="0 0 64 64" aria-hidden="true"><path class="a" pathLength="1" d="M20 58V28a14 14 0 0 1 28 0v30"/><path class="a" pathLength="1" d="M30 58V28a4 4 0 0 1 8 0v30"/><path pathLength="1" d="M26 16V6M34 14V4M42 16V6"/></svg>
+          <span class="code">TAAA</span><h3><span data-l="en">Aortic surgery</span><span data-l="tr">Aort cerrahisi</span></h3><p data-l="en">Elective repair of thoracic aortic aneurysms and emergency surgery for acute type A dissection.</p><p data-l="tr">Torasik aort anevrizmalarının planlı onarımı ve akut tip A diseksiyonda acil cerrahi.</p></div></li>
+        <li class="rv"><div class="card tilt">
+          <svg viewBox="0 0 64 64" aria-hidden="true"><path class="a" pathLength="1" d="M28 4v22c0 8-14 12-14 34"/><path class="v" pathLength="1" d="M36 4v22c0 8 14 12 14 34"/><path pathLength="1" d="M28 16h8M24 40h-6M40 40h6"/></svg>
+          <span class="code">PAD</span><h3><span data-l="en">Peripheral vascular</span><span data-l="tr">Periferik damar</span></h3><p data-l="en">Carotid endarterectomy, peripheral bypass and treatment of varicose veins.</p><p data-l="tr">Karotis endarterektomi, periferik bypass ve varis tedavisi.</p></div></li>
+      </ul>
     </div>
   </section>
 
   <section class="block" id="career">
-    <div class="wrap sec">
-      <p class="label mono"><b>03</b><span data-l="en">Career</span><span data-l="tr">Kariyer</span></p>
-      <div>
-        <h2><span data-l="en">Training and experience</span><span data-l="tr">Eğitim ve deneyim</span></h2>
-        <ol class="tl" reversed>
-          <li><span class="yr">2033 —</span><div><h3><span data-l="en">Cardiovascular Surgeon</span><span data-l="tr">Kalp ve Damar Cerrahisi Uzmanı</span></h3><p data-l="en">Department of Cardiovascular Surgery, Istanbul. Adult cardiac and aortic surgery.</p><p data-l="tr">Kalp ve Damar Cerrahisi Kliniği, İstanbul. Erişkin kalp ve aort cerrahisi.</p></div></li>
-          <li><span class="yr">2032</span><div><h3><span data-l="en">Clinical observership, minimally invasive valve surgery</span><span data-l="tr">Klinik gözlemcilik, minimal invaziv kapak cerrahisi</span></h3><p data-l="en">Three months at a high-volume European heart centre, Germany.</p><p data-l="tr">Almanya'da yüksek hasta hacimli bir Avrupa kalp merkezinde üç ay.</p></div></li>
-          <li><span class="yr">2027 – 2033</span><div><h3><span data-l="en">Residency in Cardiovascular Surgery</span><span data-l="tr">Kalp ve Damar Cerrahisi Uzmanlık Eğitimi</span></h3><p data-l="en">Six-year specialty training in Istanbul, including cardiology, intensive care and thoracic surgery rotations.</p><p data-l="tr">İstanbul'da altı yıllık uzmanlık eğitimi; kardiyoloji, yoğun bakım ve göğüs cerrahisi rotasyonları dahil.</p></div></li>
-          <li><span class="yr">2021 – 2027</span><div><h3><span data-l="en">Doctor of Medicine (MD)</span><span data-l="tr">Tıp Doktoru</span></h3><p data-l="en">Istanbul Aydın University, Faculty of Medicine. Internship year with a focus on cardiovascular surgery.</p><p data-l="tr">İstanbul Aydın Üniversitesi Tıp Fakültesi. İntörnlük yılında kalp ve damar cerrahisi odağı.</p></div></li>
-        </ol>
-        <div class="members" aria-label="Memberships">
-          <span data-l="en">Turkish Society of Cardiovascular Surgery</span><span data-l="tr">Türk Kalp ve Damar Cerrahisi Derneği</span>
-          <span>EACTS member</span>
-          <span data-l="en">Turkish Medical Association</span><span data-l="tr">Türk Tabipleri Birliği</span>
-          <span>ACLS / ATLS</span>
-        </div>
-      </div>
+    <div class="wrap">
+      <h2 class="rv"><span data-l="en">Training and experience</span><span data-l="tr">Eğitim ve deneyim</span></h2>
+      <ol class="tl" id="tl" reversed>
+        <li class="rv"><span class="yr"><span data-l="en">2033 to today</span><span data-l="tr">2033'ten bugüne</span></span><div><h3><span data-l="en">Cardiovascular Surgeon</span><span data-l="tr">Kalp ve Damar Cerrahisi Uzmanı</span></h3><p data-l="en">Department of Cardiovascular Surgery, Istanbul. Adult cardiac and aortic surgery.</p><p data-l="tr">Kalp ve Damar Cerrahisi Kliniği, İstanbul. Erişkin kalp ve aort cerrahisi.</p></div></li>
+        <li class="rv"><span class="yr">2032</span><div><h3><span data-l="en">Clinical observership, minimally invasive valve surgery</span><span data-l="tr">Klinik gözlemcilik, minimal invaziv kapak cerrahisi</span></h3><p data-l="en">Three months at a high-volume European heart centre, Germany.</p><p data-l="tr">Almanya'da yüksek hasta hacimli bir Avrupa kalp merkezinde üç ay.</p></div></li>
+        <li class="rv"><span class="yr">2027 – 2033</span><div><h3><span data-l="en">Residency in Cardiovascular Surgery</span><span data-l="tr">Kalp ve Damar Cerrahisi Uzmanlık Eğitimi</span></h3><p data-l="en">Six-year specialty training in Istanbul, including cardiology, intensive care and thoracic surgery rotations.</p><p data-l="tr">İstanbul'da altı yıllık uzmanlık eğitimi; kardiyoloji, yoğun bakım ve göğüs cerrahisi rotasyonları dahil.</p></div></li>
+        <li class="rv"><span class="yr">2021 – 2027</span><div><h3><span data-l="en">Doctor of Medicine (MD)</span><span data-l="tr">Tıp Doktoru</span></h3><p data-l="en">Istanbul Aydın University, Faculty of Medicine. Internship year with a focus on cardiovascular surgery.</p><p data-l="tr">İstanbul Aydın Üniversitesi Tıp Fakültesi. İntörnlük yılında kalp ve damar cerrahisi odağı.</p></div></li>
+      </ol>
+      <p class="members rv">
+        <span data-l="en"><strong>Memberships.</strong> Turkish Society of Cardiovascular Surgery, EACTS, Turkish Medical Association. ACLS and ATLS certified.</span>
+        <span data-l="tr"><strong>Üyelikler.</strong> Türk Kalp ve Damar Cerrahisi Derneği, EACTS, Türk Tabipleri Birliği. ACLS ve ATLS sertifikalı.</span>
+      </p>
     </div>
   </section>
 
-  <section class="block alt" id="conferences">
-    <div class="wrap sec">
-      <p class="label mono"><b>04</b><span data-l="en">Conferences</span><span data-l="tr">Kongreler</span></p>
-      <div>
-        <h2><span data-l="en">Congresses and talks</span><span data-l="tr">Kongreler ve sunumlar</span></h2>
-        <div class="conf">
-          <table>
-            <thead><tr><th><span data-l="en">Year</span><span data-l="tr">Yıl</span></th><th><span data-l="en">Meeting</span><span data-l="tr">Toplantı</span></th><th><span data-l="en">City</span><span data-l="tr">Şehir</span></th><th><span data-l="en">Role</span><span data-l="tr">Görev</span></th></tr></thead>
-            <tbody>
-              <tr><td>2035</td><td><span class="ev">EACTS Annual Meeting</span><span class="tt">Early outcomes of minimally invasive mitral repair: a single-centre series</span></td><td>Barcelona</td><td><span class="pill oral"><span data-l="en">Oral</span><span data-l="tr">Sözlü</span></span></td></tr>
-              <tr><td>2034</td><td><span class="ev"><span data-l="en">Turkish Society of Cardiovascular Surgery, National Congress</span><span data-l="tr">Türk Kalp ve Damar Cerrahisi Derneği Ulusal Kongresi</span></span><span class="tt"><span data-l="en">Women in cardiac surgery panel</span><span data-l="tr">Kalp cerrahisinde kadınlar paneli</span></span></td><td>Antalya</td><td><span class="pill panel"><span data-l="en">Panelist</span><span data-l="tr">Panelist</span></span></td></tr>
-              <tr><td>2034</td><td><span class="ev">ESC Congress</span><span class="tt">Atrial fibrillation after CABG: predictors in 412 patients</span></td><td>Munich</td><td><span class="pill poster">Poster</span></td></tr>
-              <tr><td>2033</td><td><span class="ev">STS Annual Meeting</span><span class="tt">Off-pump vs on-pump bypass in diabetic patients</span></td><td>San Diego</td><td><span class="pill poster">Poster</span></td></tr>
-              <tr><td>2032</td><td><span class="ev">ESCVS Congress</span><span class="tt">Acute type A dissection: 30-day outcomes in a Turkish centre</span></td><td>Prague</td><td><span class="pill oral"><span data-l="en">Oral</span><span data-l="tr">Sözlü</span></span></td></tr>
-              <tr><td>2030</td><td><span class="ev"><span data-l="en">Istanbul Aydın University Cardiology Days</span><span data-l="tr">İstanbul Aydın Üniversitesi Kardiyoloji Günleri</span></span><span class="tt"><span data-l="en">What every intern should know about cardiac surgery</span><span data-l="tr">Her intörnün kalp cerrahisi hakkında bilmesi gerekenler</span></span></td><td><span data-l="en">Istanbul</span><span data-l="tr">İstanbul</span></td><td><span class="pill inv"><span data-l="en">Invited</span><span data-l="tr">Davetli</span></span></td></tr>
-              <tr><td>2026</td><td><span class="ev"><span data-l="en">Istanbul Aydın University Faculty of Medicine · General Surgery</span><span data-l="tr">İstanbul Aydın Üniversitesi Tıp Fakültesi · Genel Cerrahi</span></span><span class="tt"><span data-l="en">Case presentations: Where is the pain, where is the diagnosis? Case discussion in acute abdomen (13 October)</span><span data-l="tr">Olgu sunumları: Ağrı nerede, tanı nerede? Akut karında olgu tartışması (13 Ekim)</span></span></td><td><span data-l="en">Istanbul</span><span data-l="tr">İstanbul</span></td><td><span class="pill oral"><span data-l="en">Speaker</span><span data-l="tr">Konuşmacı</span></span></td></tr>
-            </tbody>
-          </table>
+  <section class="block" id="conferences">
+    <div class="wrap">
+      <h2 class="rv"><span data-l="en">Congresses and talks</span><span data-l="tr">Kongreler ve sunumlar</span></h2>
+      <div class="conf">
+        <div class="globe-col">
+          <div class="anchor" id="a-globe" aria-hidden="true"></div>
+          <p class="globe-cap" id="globe-cap" aria-live="polite"></p>
+        </div>
+        <div>
+          <ul class="rows" id="rows">
+            <li tabindex="0" data-lat="41.39" data-lon="2.17"><span class="y">2035</span><span class="where"><span class="city">Barcelona</span><span class="pill oral"><span data-l="en">Oral</span><span data-l="tr">Sözlü</span></span></span><span class="ev">EACTS Annual Meeting</span><span class="tt">Early outcomes of minimally invasive mitral repair: a single-centre series</span></li>
+            <li tabindex="0" data-lat="36.9" data-lon="30.7"><span class="y">2034</span><span class="where"><span class="city">Antalya</span><span class="pill panel">Panelist</span></span><span class="ev"><span data-l="en">Turkish Society of Cardiovascular Surgery, National Congress</span><span data-l="tr">Türk Kalp ve Damar Cerrahisi Derneği Ulusal Kongresi</span></span><span class="tt"><span data-l="en">Women in cardiac surgery panel</span><span data-l="tr">Kalp cerrahisinde kadınlar paneli</span></span></li>
+            <li tabindex="0" data-lat="48.14" data-lon="11.58"><span class="y">2034</span><span class="where"><span class="city"><span data-l="en">Munich</span><span data-l="tr">Münih</span></span><span class="pill">Poster</span></span><span class="ev">ESC Congress</span><span class="tt">Atrial fibrillation after CABG: predictors in 412 patients</span></li>
+            <li tabindex="0" data-lat="32.72" data-lon="-117.16"><span class="y">2033</span><span class="where"><span class="city">San Diego</span><span class="pill">Poster</span></span><span class="ev">STS Annual Meeting</span><span class="tt">Off-pump vs on-pump bypass in diabetic patients</span></li>
+            <li tabindex="0" data-lat="50.08" data-lon="14.44"><span class="y">2032</span><span class="where"><span class="city"><span data-l="en">Prague</span><span data-l="tr">Prag</span></span><span class="pill oral"><span data-l="en">Oral</span><span data-l="tr">Sözlü</span></span></span><span class="ev">ESCVS Congress</span><span class="tt">Acute type A dissection: 30-day outcomes in a Turkish centre</span></li>
+            <li tabindex="0" data-lat="41.01" data-lon="28.98"><span class="y">2030</span><span class="where"><span class="city"><span data-l="en">Istanbul</span><span data-l="tr">İstanbul</span></span><span class="pill panel"><span data-l="en">Invited</span><span data-l="tr">Davetli</span></span></span><span class="ev"><span data-l="en">Istanbul Aydın University Cardiology Days</span><span data-l="tr">İstanbul Aydın Üniversitesi Kardiyoloji Günleri</span></span><span class="tt"><span data-l="en">What every intern should know about cardiac surgery</span><span data-l="tr">Her intörnün kalp cerrahisi hakkında bilmesi gerekenler</span></span></li>
+            <li tabindex="0" data-lat="41.01" data-lon="28.98"><span class="y">2026</span><span class="where"><span class="city"><span data-l="en">Istanbul</span><span data-l="tr">İstanbul</span></span><span class="pill oral"><span data-l="en">Speaker</span><span data-l="tr">Konuşmacı</span></span></span><span class="ev"><span data-l="en">Istanbul Aydın University Faculty of Medicine, General Surgery</span><span data-l="tr">İstanbul Aydın Üniversitesi Tıp Fakültesi, Genel Cerrahi</span></span><span class="tt"><span data-l="en">Case presentations: Where is the pain, where is the diagnosis? Case discussion in acute abdomen (13 October)</span><span data-l="tr">Olgu sunumları: Ağrı nerede, tanı nerede? Akut karında olgu tartışması (13 Ekim)</span></span></li>
+          </ul>
+          <p class="swipe"><span data-l="en">Swipe to travel between congresses</span><span data-l="tr">Kongreler arasında gezinmek için kaydırın</span></p>
         </div>
       </div>
     </div>
   </section>
 
   <section class="block" id="publications">
-    <div class="wrap sec">
-      <p class="label mono"><b>05</b><span data-l="en">Research</span><span data-l="tr">Araştırma</span></p>
-      <div>
-        <h2><span data-l="en">Selected publications</span><span data-l="tr">Seçilmiş yayınlar</span></h2>
-        <ul class="pubs">
-          <li><span class="t">Minimally invasive mitral valve repair through right mini-thoracotomy: early results of 150 consecutive patients</span><span class="a"><span class="nm-last">Bozorginia</span> R., et al.</span><span class="j mono">Eur J Cardiothorac Surg · 2035</span></li>
-          <li><span class="t">Predictors of new-onset atrial fibrillation after isolated coronary artery bypass grafting</span><span class="a"><span class="nm-last">Bozorginia</span> R., et al.</span><span class="j mono">Turk Gogus Kalp Damar Cerrahisi Derg · 2034</span></li>
-          <li><span class="t">Thirty-day mortality after surgery for acute type A aortic dissection: a retrospective analysis</span><span class="a">et al., <span class="nm-last">Bozorginia</span> R.</span><span class="j mono">Interdiscip Cardiovasc Thorac Surg · 2032</span></li>
-          <li><span class="t">Off-pump versus on-pump CABG in patients with diabetes mellitus: a propensity-matched study</span><span class="a"><span class="nm-last">Bozorginia</span> R., et al.</span><span class="j mono">Heart Surg Forum · 2031</span></li>
-        </ul>
-      </div>
+    <div class="wrap">
+      <h2 class="rv"><span data-l="en">Selected publications</span><span data-l="tr">Seçilmiş yayınlar</span></h2>
+      <ul class="pubs">
+        <li class="rv"><span class="j">Eur J Cardiothorac Surg, 2035</span><span class="t">Minimally invasive mitral valve repair through right mini-thoracotomy: early results of 150 consecutive patients</span><span class="a"><span class="nm-last">Bozorginia</span> R., et al.</span></li>
+        <li class="rv"><span class="j">Turk Gogus Kalp Damar Cerrahisi Derg, 2034</span><span class="t">Predictors of new-onset atrial fibrillation after isolated coronary artery bypass grafting</span><span class="a"><span class="nm-last">Bozorginia</span> R., et al.</span></li>
+        <li class="rv"><span class="j">Interdiscip Cardiovasc Thorac Surg, 2032</span><span class="t">Thirty-day mortality after surgery for acute type A aortic dissection: a retrospective analysis</span><span class="a">et al., <span class="nm-last">Bozorginia</span> R.</span></li>
+        <li class="rv"><span class="j">Heart Surg Forum, 2031</span><span class="t">Off-pump versus on-pump CABG in patients with diabetes mellitus: a propensity-matched study</span><span class="a"><span class="nm-last">Bozorginia</span> R., et al.</span></li>
+      </ul>
     </div>
   </section>
 
-  <section class="block alt" id="contact">
-    <div class="wrap sec">
-      <p class="label mono"><b>06</b><span data-l="en">Contact</span><span data-l="tr">İletişim</span></p>
-      <div>
-        <h2><span data-l="en">Book a consultation</span><span data-l="tr">Muayene randevusu</span></h2>
-        <div class="contact">
-          <div class="info">
-            <div><span class="mono"><span data-l="en">Clinic</span><span data-l="tr">Muayenehane</span></span><p><span data-l="en">Cardiovascular Surgery Clinic<br>Florya, Istanbul, Türkiye</span><span data-l="tr">Kalp ve Damar Cerrahisi Kliniği<br>Florya, İstanbul, Türkiye</span></p></div>
-            <div><span class="mono"><span data-l="en">Phone</span><span data-l="tr">Telefon</span></span><div class="row"><p id="phone">+90 212 000 00 00</p><button type="button" class="copy" data-copy="phone"><span data-l="en">Copy</span><span data-l="tr">Kopyala</span></button></div></div>
-            <div><span class="mono">E-mail</span><div class="row"><p id="email">appointments@example.com</p><button type="button" class="copy" data-copy="email"><span data-l="en">Copy</span><span data-l="tr">Kopyala</span></button></div></div>
-            <div><span class="mono"><span data-l="en">Languages</span><span data-l="tr">Diller</span></span><p><span data-l="en">Turkish · English · German · Persian</span><span data-l="tr">Türkçe · İngilizce · Almanca · Farsça</span></p></div>
-            <div><span class="mono"><span data-l="en">Consultation hours</span><span data-l="tr">Muayene saatleri</span></span>
-              <div class="hours"><span data-l="en">Mon – Thu</span><span data-l="tr">Pzt – Per</span><span>14:00 – 18:00</span><span data-l="en">Saturday</span><span data-l="tr">Cumartesi</span><span>10:00 – 13:00</span></div></div>
-          </div>
-          <form id="book" novalidate>
+  <section class="block" id="contact">
+    <div class="wrap">
+      <div class="contact-head">
+        <div class="anchor" id="a-heart2" aria-hidden="true"></div>
+        <h2 class="rv"><span data-l="en">Book a consultation</span><span data-l="tr">Muayene randevusu</span></h2>
+      </div>
+      <div class="contact">
+        <dl class="info rv">
+          <div><dt><span data-l="en">Clinic</span><span data-l="tr">Muayenehane</span></dt><dd><span data-l="en">Cardiovascular Surgery Clinic, Florya, Istanbul, Türkiye</span><span data-l="tr">Kalp ve Damar Cerrahisi Kliniği, Florya, İstanbul, Türkiye</span></dd></div>
+          <div><dt><span data-l="en">Phone</span><span data-l="tr">Telefon</span></dt><dd><span id="phone">+90 212 000 00 00</span><button type="button" class="copy" data-copy="phone"><span data-l="en">Copy</span><span data-l="tr">Kopyala</span></button></dd></div>
+          <div><dt>E-mail</dt><dd><span id="email">appointments@example.com</span><button type="button" class="copy" data-copy="email"><span data-l="en">Copy</span><span data-l="tr">Kopyala</span></button></dd></div>
+          <div><dt><span data-l="en">Languages</span><span data-l="tr">Diller</span></dt><dd><span data-l="en">Turkish, English, German, Persian</span><span data-l="tr">Türkçe, İngilizce, Almanca, Farsça</span></dd></div>
+          <div><dt><span data-l="en">Consultation hours</span><span data-l="tr">Muayene saatleri</span></dt>
+            <dd><span class="hours"><span data-l="en">Mon – Thu</span><span data-l="tr">Pzt – Per</span><span>14:00 – 18:00</span><span data-l="en">Saturday</span><span data-l="tr">Cumartesi</span><span>10:00 – 13:00</span></span></dd></div>
+        </dl>
+        <div class="formwrap rv">
+          <form id="book" class="tilt soft" novalidate>
             <div class="two">
               <label for="f-name"><span><span data-l="en">Full name</span><span data-l="tr">Ad soyad</span></span><input id="f-name" name="name" autocomplete="name" required></label>
               <label for="f-phone"><span><span data-l="en">Phone</span><span data-l="tr">Telefon</span></span><input id="f-phone" name="phone" type="tel" autocomplete="tel" required></label>
@@ -435,7 +468,7 @@ footer .wrap{display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap}
               </select>
             </label>
             <label for="f-msg"><span><span data-l="en">Message</span><span data-l="tr">Mesaj</span></span><textarea id="f-msg" name="message"></textarea></label>
-            <button class="btn primary" type="submit" style="justify-self:start"><span data-l="en">Request appointment</span><span data-l="tr">Randevu talep et</span></button>
+            <button class="btn primary" type="submit"><span data-l="en">Request appointment</span><span data-l="tr">Randevu talep et</span></button>
             <p class="note" id="form-note" hidden></p>
           </form>
         </div>
@@ -464,187 +497,341 @@ footer .wrap{display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap}
 const DOCTOR_FIRST = "Rojina";
 const DOCTOR_LAST = "Bozorginia";
 
+// Coarse world map (2° cells, 1 bit each) used to draw the continents on the globe.
+const LAND = "AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAOAfAP8DAAAAAAAAAAAAAAAAAAAAAADo//z//wcAAAAAAAACAAAAAAAAAAAAhvvw//8PAPABAAAAwAMAAAAAAAAAwADkw////wEABAAAAABgAAAAAAAAAADAUT8A/v8PAAAAAAwA/j8AuAEAAAAAcBHtDcD/fwAAAAAwAPz/fwMAABCAAQD5w/wD8P8FAAAMAIL7//////9/AP//////////////B/D/SAAAAAAAQID//////////////x8AKAAEAAAAAAAA8///////////////YCgAAAAAAAAAAADw/////wEs4AEAAHz+////////////gL////8HeAAcAADg5///////////9ADgAf7/f4AnAAAAAH78////////H0QAAAiA//8f8AcAAIBB4////////38ADwAQAOD//5//AQAAHAT/////////A3AAAAAA/v//+T8AAGDz//////////8DAQAAAMD/////AwAAsP//////////LwAAAAAA6P///2IAAAD+//////////8CAAAAAAD///8/CAAA4P//////////JwAAAAAA8P///wYAAAD+/unz/////z8AAAAAAAD///8HAAAA/pgPPP//////MQAAAAAA8P//PwAAAMBD9v7n/////wcBAAAAAAD///8AAAAAPkD7f/7///8hEAAAAAAA4P//DwAAAIDhAv/n////f8YAAAAAAAD8//8AAAAA+AdE//////8jDwAAAAAAgP//AwAAAMD/APD/////PxgAAAAAAADw/x8AAAAA/n/v//////8HAAAAAAAAAPwDAgAAAOD////7////fwAAAAAAAACgHyAAAACA//9/f/7///8DAAAAAAAAAPQBAAAAAPj//+cv+P//PwAAAAAAAAAAHjAAAADA/////g/+//8EAAAAAAAAAOBhCAAAAP7//99/4D//AAAAAAAAAAAAPAMEAADA////+Qf84BcAAAAAAAAAAAA/AAAAAPz//58fgAf+QAAAAAAAAAAAAA8AAADg////ewA4gA8EAAAAAAAAAADAAAAAAPz//38BgAP4QQAAAAAAAAAAAAgPAADA////zwAwgAwQAAAAAAAAAAAA9Q8AAPj///8HAAVIAAAAAAAAAAAAAID/AQAA////fwBAAAAQAAAAAAAAAAAA+P8AAGDh//8DAAA0GAAAAAAAAAAAAID/HwAAAPj/HwAAgMIBAAAAAAAAAAAA/P8BAACA//8AAAAYXgAAAAAAAAAAAMD/fwAAAPz/BwAAAOOBAQAAAAAAAAAA/P8/AACA/z8AAABgbtQBAAAAAAAAAOD//w8AAPD/AwAAAAQIeAAAAAAAAAAA/P//AQAA/z8AAACAA4APAQAAAAAAAID//w8AAPD/AwAAAAARsEAAAAAAAAAA+P9/AAAA/j8AAAAAAAAAAAAAAAAAAAD//wcAAPD/QwAAAACAIwAAAAAAAAAA8P9/AAAA/z8EAAAAAD8GIAAAAAAAAAD8/wMAAPD/cQAAAAD4ZwAAAAAAAAAAgP8/AAAA/w8HAAAAgP8HAAAAAAAAAAD4/wMAAOD/MAAAAAD//wEBAAAAAAAAgP8PAAAA/g8DAAAA+P8fAAAAAAAAAAD4PwAAAOB/EAAAAID//wMAAAAAAAAAgP8DAAAA/AMAAAAA+P9/AAAAAAAAAAD8HwAAAMA/AAAAAID//wcAAAAAAAAAwP8BAAAA+AEAAAAA8P9/AAAAAAAAAAD8DwAAAIAPAAAAAAAP/gMAAAAAAAAAwB8AAAAAAAAAAAAAEIAfAAEAAAAAAAD+AwAAAAAAAAAAAAAA8AEgAAAAAAAA4AcAAAAAAAAAAAAAAAAAAAYAAAAAAABeAAAAAAAAAAAAAAAAwAAwAAAAAAAAwAMAAAAAAAAAAAAAAAAIgAEAAAAAAAAeAAAAAAAAAAAAAAAAAAAMAAAAAAAA4AEAAAAAAAAAAAAAAAAAAAAAAAAAAAAPAAAAAAAAAAABAAAAAAAAAAAAAAAAcAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAOAAAAAAAAAAAAAAAAAAAAAAAAAAAAwAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAMAAAAAAAB4AEDwn/8HAAAAAAAAAAAwAAAAAACA/P/h/////w8AAAAAAAAAwAcAAAD4////z///////PwAAAAAAHALwAACA//////////////8HAADw/y///wMAAP7/////////////HwAA+P///38AAID///////////////8AAPL/////BwAO////////////////DwAA8P////8HEPD//////////////z8AAOD/////////////////////////HwDgPwAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA";
+
 (function(){
+  const $ = (s, r) => (r || document).querySelector(s), $$ = (s, r) => Array.from((r || document).querySelectorAll(s));
   const full = DOCTOR_FIRST + " " + DOCTOR_LAST;
-  document.querySelectorAll(".nm-first").forEach(e => e.textContent = DOCTOR_FIRST);
-  document.querySelectorAll(".nm-last").forEach(e => e.textContent = DOCTOR_LAST);
-  document.querySelectorAll(".nm-full").forEach(e => e.textContent = full);
-  document.querySelectorAll("img[alt]").forEach(e => e.alt = e.alt.replace("Rojina Bozorginia", full));
-  document.title = "Dr. " + full + " · Cardiovascular Surgeon";
-
   const reduce = matchMedia("(prefers-reduced-motion: reduce)").matches;
-  const finePointer = matchMedia("(hover: hover) and (pointer: fine)").matches;
+  const fine = matchMedia("(hover: hover) and (pointer: fine)").matches;
+  document.documentElement.classList.add("js");
 
-  // ECG sweep length
-  const sweep = document.querySelector(".ecg path.sweep");
-  if (sweep && sweep.getTotalLength) { const L = sweep.getTotalLength(); sweep.style.setProperty("--len", L); sweep.style.setProperty("--seg", Math.round(L * 0.14)); }
+  // ---- Name ----
+  $$(".nm-first").forEach(e => e.textContent = DOCTOR_FIRST);
+  $$(".nm-last").forEach(e => e.textContent = DOCTOR_LAST);
+  $$(".nm-full").forEach(e => e.textContent = full);
+  $$("img[alt]").forEach(e => e.alt = e.alt.replace("Rojina Bozorginia", full));
+  document.title = "Dr. " + full;
+  const h1 = $("#name"); h1.setAttribute("aria-label", "Dr. " + full);
+  let ci = 0;
+  $$(".ln", h1).forEach(ln => {
+    const t = ln.textContent; ln.textContent = ""; ln.setAttribute("aria-hidden", "true");
+    for (const c of t) { const s = document.createElement("span"); s.className = "ch"; s.style.setProperty("--i", ci++); s.textContent = c; ln.appendChild(s); }
+  });
 
-  // Language
-  const site = document.getElementById("site");
-  const btnEn = document.getElementById("lang-en"), btnTr = document.getElementById("lang-tr");
+  // ---- Language ----
+  const site = $("#site"), btnEn = $("#lang-en"), btnTr = $("#lang-tr");
+  let onLang = () => {};
   function setLang(l){
-    site.dataset.lang = l;
-    document.documentElement.lang = l;
-    btnEn.setAttribute("aria-pressed", l === "en");
-    btnTr.setAttribute("aria-pressed", l === "tr");
-    document.querySelectorAll("option[data-en]").forEach(o => o.textContent = o.dataset[l]);
+    site.dataset.lang = l; document.documentElement.lang = l;
+    btnEn.setAttribute("aria-pressed", l === "en"); btnTr.setAttribute("aria-pressed", l === "tr");
+    $$("option[data-en]").forEach(o => o.textContent = o.dataset[l]);
     try { localStorage.setItem("lang", l); } catch(e) {}
+    onLang();
   }
-  btnEn.onclick = () => setLang("en");
-  btnTr.onclick = () => setLang("tr");
-  let saved = null;
-  try { saved = localStorage.getItem("lang"); } catch(e) {}
+  btnEn.onclick = () => setLang("en"); btnTr.onclick = () => setLang("tr");
+  let saved = null; try { saved = localStorage.getItem("lang"); } catch(e) {}
   setLang(saved === "tr" ? "tr" : "en");
 
-  // Mobile menu
-  const menuBtn = document.getElementById("menu-btn"), sheet = document.getElementById("sheet");
+  // ---- Menu, dock, copy, form ----
+  const menuBtn = $("#menu-btn"), sheet = $("#sheet");
   menuBtn.onclick = () => { const open = sheet.hidden; sheet.hidden = !open; menuBtn.setAttribute("aria-expanded", open); };
-  sheet.querySelectorAll("a").forEach(a => a.addEventListener("click", () => { sheet.hidden = true; menuBtn.setAttribute("aria-expanded", false); }));
+  $$("a", sheet).forEach(a => a.addEventListener("click", () => { sheet.hidden = true; menuBtn.setAttribute("aria-expanded", false); }));
 
-  // Phone booking bar: show once the hero has scrolled away, hide again near the contact form
-  const dock = document.getElementById("dock"), stageSec = document.querySelector(".stage"), contactSec = document.getElementById("contact");
-  if (dock && window.IntersectionObserver) {
-    let pastHero = false, atContact = false;
-    const upd = () => dock.classList.toggle("show", pastHero && !atContact);
-    new IntersectionObserver(([e]) => { pastHero = !e.isIntersecting; upd(); }).observe(stageSec);
-    new IntersectionObserver(([e]) => { atContact = e.isIntersecting; upd(); }, { threshold: .15 }).observe(contactSec);
+  const dock = $("#dock"), heroSec = $(".hero"), contactSec = $("#contact");
+  if (window.IntersectionObserver) {
+    let past = false, atC = false; const upd = () => dock.classList.toggle("show", past && !atC);
+    new IntersectionObserver(([e]) => { past = !e.isIntersecting; upd(); }).observe(heroSec);
+    new IntersectionObserver(([e]) => { atC = e.isIntersecting; upd(); }, { threshold: .15 }).observe(contactSec);
   }
 
-  // Copy buttons
-  document.querySelectorAll(".copy").forEach(b => b.addEventListener("click", () => {
+  $$(".copy").forEach(b => b.addEventListener("click", () => {
     const el = document.getElementById(b.dataset.copy);
     const done = () => { const t = b.innerHTML; b.textContent = site.dataset.lang === "tr" ? "Kopyalandı" : "Copied"; setTimeout(() => b.innerHTML = t, 1400); };
     const select = () => { const r = document.createRange(); r.selectNodeContents(el); const s = getSelection(); s.removeAllRanges(); s.addRange(r); };
     if (navigator.clipboard) navigator.clipboard.writeText(el.textContent).then(done, select); else select();
   }));
 
-  // Form
-  const form = document.getElementById("book"), note = document.getElementById("form-note");
+  // Heart rhythm shared by the monitor trace, the readout and the 3D heart
+  let bpm = 72, bpmTarget = 72, phase = 0;
+  const form = $("#book"), note = $("#form-note");
   form.addEventListener("submit", e => {
     e.preventDefault();
     const tr = site.dataset.lang === "tr";
-    if (!document.getElementById("f-name").value.trim() || !document.getElementById("f-phone").value.trim()) {
+    if (!$("#f-name").value.trim() || !$("#f-phone").value.trim()) {
       note.textContent = tr ? "Lütfen adınızı ve telefon numaranızı yazın." : "Please enter your name and phone number.";
     } else {
       note.textContent = tr ? "Teşekkürler. Bu bir demo sitedir; talep hiçbir yere gönderilmedi." : "Thank you. This is a demo site, so the request was not sent anywhere.";
-      form.reset();
+      form.reset(); if (!reduce) bpm = 124;
     }
     note.hidden = false;
   });
 
-  // Scroll-in depth effect and 3D tilt targets
-  document.querySelectorAll(".tl li, .conf tr, .pubs li, .or, blockquote, .info > div").forEach(el => el.classList.add("reveal"));
-  const tilts = document.querySelectorAll(".proc li, form");
-  tilts.forEach(el => el.classList.add("tilt"));
-  if (finePointer && !reduce) {
-    tilts.forEach(el => {
+  // ---- Reveal on scroll ----
+  $$(".proc li, .tl li, .pubs li").forEach(el => el.style.setProperty("--d", Array.prototype.indexOf.call(el.parentNode.children, el) % 3));
+  const rvs = $$(".rv");
+  if (window.IntersectionObserver && !reduce) {
+    const io = new IntersectionObserver(es => es.forEach(e => { if (e.isIntersecting) { e.target.classList.add("in"); io.unobserve(e.target); } }), { rootMargin: "0px 0px -8% 0px", threshold: .08 });
+    rvs.forEach(el => io.observe(el));
+  } else rvs.forEach(el => el.classList.add("in"));
+
+  // ---- Count-up figures ----
+  const facts = $$(".facts dt");
+  if (window.IntersectionObserver && !reduce) {
+    const io2 = new IntersectionObserver(es => es.forEach(e => {
+      if (!e.isIntersecting) return; io2.unobserve(e.target);
+      const el = e.target, n = +el.dataset.n, suf = el.dataset.suf || "", t0 = performance.now(), dur = 1600;
+      (function tick(t){ const k = Math.min(1, (t - t0) / dur), v = Math.round(n * (1 - Math.pow(1 - k, 4))); el.textContent = v + suf; if (k < 1) requestAnimationFrame(tick); })(t0);
+    }), { threshold: .6 });
+    facts.forEach(el => io2.observe(el));
+  }
+
+  // ---- Pointer tilt, glare and magnetic buttons (desktop) ----
+  if (fine && !reduce) {
+    $$(".tilt").forEach(el => {
+      const k = el.classList.contains("soft") ? 3 : 11;
       el.addEventListener("pointermove", e => {
-        const r = el.getBoundingClientRect(), x = (e.clientX - r.left) / r.width - .5, y = (e.clientY - r.top) / r.height - .5;
-        const k = el.tagName === "FORM" ? 3 : 9;
-        el.style.setProperty("--ry", (x * k) + "deg"); el.style.setProperty("--rx", (-y * k) + "deg");
+        const r = el.getBoundingClientRect(), x = (e.clientX - r.left) / r.width, y = (e.clientY - r.top) / r.height;
+        el.style.setProperty("--ry", ((x - .5) * k) + "deg"); el.style.setProperty("--rx", (-(y - .5) * k) + "deg");
+        el.style.setProperty("--gx", (x * 100) + "%"); el.style.setProperty("--gy", (y * 100) + "%");
       });
       el.addEventListener("pointerleave", () => { el.style.setProperty("--ry", "0deg"); el.style.setProperty("--rx", "0deg"); });
     });
-  }
-
-  // Portrait card follows the pointer on desktop; floats on its own on phones
-  const card = document.getElementById("card3d");
-  if (finePointer && !reduce) {
-    card.classList.add("live");
-    const reset = () => { card.style.setProperty("--ry", "0deg"); card.style.setProperty("--rx", "0deg"); card.style.setProperty("--gx", "30%"); card.style.setProperty("--gy", "20%"); };
-    reset();
-    card.addEventListener("pointermove", e => {
-      const r = card.getBoundingClientRect(), x = (e.clientX - r.left) / r.width - .5, y = (e.clientY - r.top) / r.height - .5;
-      card.style.setProperty("--ry", (x * 18) + "deg"); card.style.setProperty("--rx", (-y * 14) + "deg");
-      card.style.setProperty("--gx", (50 + x * 100) + "%"); card.style.setProperty("--gy", (50 + y * 100) + "%");
+    $$(".mag").forEach(el => {
+      el.addEventListener("pointermove", e => { const r = el.getBoundingClientRect(); el.style.setProperty("--mx", ((e.clientX - r.left - r.width / 2) * .22) + "px"); el.style.setProperty("--my", ((e.clientY - r.top - r.height / 2) * .3) + "px"); });
+      el.addEventListener("pointerleave", () => { el.style.setProperty("--mx", "0px"); el.style.setProperty("--my", "0px"); });
     });
-    card.addEventListener("pointerleave", reset);
   }
-
-  // Beating particle heart (Three.js). The page still works if the library fails to load.
-  const canvas = document.getElementById("heart3d");
-  if (!window.THREE || !canvas) return;
-  let renderer;
-  try { renderer = new THREE.WebGLRenderer({ canvas, antialias: true, alpha: true }); } catch (e) { return; }
-  renderer.setPixelRatio(Math.min(devicePixelRatio || 1, 2));
-  const scene = new THREE.Scene();
-  const camera = new THREE.PerspectiveCamera(42, 1, 0.1, 100);
-  camera.position.z = 5.2;
-
-  const N = innerWidth < 700 ? 2600 : 4200;
-  const pos = new Float32Array(N * 3), col = new Float32Array(N * 3);
-  const cA = new THREE.Color("#ff4f72"), cB = new THREE.Color("#ffd1db"), cC = new THREE.Color("#3dd6c3");
-  for (let i = 0; i < N; i++) {
-    const t = Math.random() * Math.PI * 2;
-    const s = Math.pow(Math.random(), 0.28);
-    const x = 16 * Math.pow(Math.sin(t), 3);
-    const y = 13 * Math.cos(t) - 5 * Math.cos(2 * t) - 2 * Math.cos(3 * t) - Math.cos(4 * t);
-    const depth = Math.sqrt(Math.max(0, 1 - s * s)) * 7 * (Math.random() < .5 ? -1 : 1) + (Math.random() - .5) * 1.2;
-    pos[i*3] = x * s / 17; pos[i*3+1] = (y * s + 2) / 17; pos[i*3+2] = depth / 17;
-    const c = Math.random() < .08 ? cC : cA.clone().lerp(cB, Math.random() * .55);
-    col[i*3] = c.r; col[i*3+1] = c.g; col[i*3+2] = c.b;
-  }
-  const geo = new THREE.BufferGeometry();
-  geo.setAttribute("position", new THREE.BufferAttribute(pos, 3));
-  geo.setAttribute("color", new THREE.BufferAttribute(col, 3));
-
-  const dot = document.createElement("canvas"); dot.width = dot.height = 64;
-  const g = dot.getContext("2d"), grd = g.createRadialGradient(32, 32, 0, 32, 32, 32);
-  grd.addColorStop(0, "rgba(255,255,255,1)"); grd.addColorStop(.35, "rgba(255,255,255,.55)"); grd.addColorStop(1, "rgba(255,255,255,0)");
-  g.fillStyle = grd; g.fillRect(0, 0, 64, 64);
-  const mat = new THREE.PointsMaterial({ size: 0.045, map: new THREE.CanvasTexture(dot), vertexColors: true, transparent: true, depthWrite: false, blending: THREE.AdditiveBlending, opacity: innerWidth < 900 ? .6 : .9 });
-  const heart = new THREE.Points(geo, mat);
-  const group = new THREE.Group(); group.add(heart); scene.add(group);
-
-  // faint dust around it
-  const D = 500, dpos = new Float32Array(D * 3);
-  for (let i = 0; i < D; i++) { dpos[i*3] = (Math.random() - .5) * 9; dpos[i*3+1] = (Math.random() - .5) * 6; dpos[i*3+2] = (Math.random() - .5) * 4 - 1; }
-  const dgeo = new THREE.BufferGeometry(); dgeo.setAttribute("position", new THREE.BufferAttribute(dpos, 3));
-  const dust = new THREE.Points(dgeo, new THREE.PointsMaterial({ size: .018, color: 0xffb3c2, transparent: true, opacity: .35, depthWrite: false }));
-  scene.add(dust);
-
-  const stageEl = canvas.parentElement;
-  function layout() {
-    const w = stageEl.clientWidth, h = stageEl.clientHeight;
-    renderer.setSize(w, h, false); camera.aspect = w / h; camera.updateProjectionMatrix();
-    if (w < 900) {
-      // world units visible at z=0, then park the heart behind the name block (~260px from the top)
-      const halfH = camera.position.z * Math.tan(THREE.MathUtils.degToRad(camera.fov / 2)), halfW = halfH * camera.aspect;
-      const s = Math.min(1.1, (halfW * 2 * .74) / 2.1);
-      group.scale.setScalar(s);
-      group.position.set(halfW * .22, halfH * (1 - 2 * Math.min(.45, 225 / h)), 0);
-    }
-    else { group.position.set(-1.1, .35, 0); group.scale.setScalar(1.25); }
-  }
-  layout(); addEventListener("resize", layout);
-
   let mx = 0, my = 0;
   addEventListener("pointermove", e => { mx = e.clientX / innerWidth - .5; my = e.clientY / innerHeight - .5; });
 
-  // lub-dub at 72 bpm
-  const period = 60 / 72;
-  function pulse(t) {
-    const p = (t % period) / period;
-    return Math.exp(-Math.pow((p - .1) / .09, 2)) + .5 * Math.exp(-Math.pow((p - .36) / .1, 2));
+  // ---- Conferences: the active row drives the globe ----
+  const rows = $$("#rows li"), cap = $("#globe-cap");
+  let active = 0, userPicked = 0;
+  function setActive(i, byUser){
+    active = i; if (byUser) userPicked = performance.now();
+    rows.forEach((r, j) => r.classList.toggle("act", j === i));
+    const r = rows[i], city = $$(".city", r)[0];
+    const vis = $$("[data-l]", city).find(s => s.dataset.l === site.dataset.lang);
+    cap.innerHTML = ""; cap.append((vis || city).textContent);
+    const sm = document.createElement("small"); sm.textContent = $(".y", r).textContent; cap.appendChild(sm);
   }
-  let visible = true;
-  new IntersectionObserver(([e]) => { visible = e.isIntersecting; }).observe(stageEl);
-  const clock = new THREE.Clock();
-  function frame() {
-    requestAnimationFrame(frame);
-    if (!visible) return;
-    const t = clock.getElapsedTime();
-    const b = reduce ? 0 : pulse(t);
-    heart.scale.setScalar(1 + b * .03);
-    mat.size = .045 + b * .004;
-    if (!reduce) {
-      group.rotation.y += ((Math.sin(t * .35) * .5 + mx * .9) - group.rotation.y) * .04;
-      group.rotation.x += ((my * .5) - group.rotation.x) * .04;
-      dust.rotation.y = t * .02;
+  onLang = () => setActive(active);
+  const wide = matchMedia("(min-width: 900px)");
+  rows.forEach((r, i) => {
+    r.addEventListener("pointerenter", () => { if (fine) setActive(i, true); });
+    r.addEventListener("focus", () => setActive(i, true));
+    r.addEventListener("click", () => setActive(i, true));
+  });
+  const rowsEl = $("#rows");
+  if (window.IntersectionObserver) {
+    const io3 = new IntersectionObserver(es => es.forEach(e => { if (e.isIntersecting && !wide.matches) setActive(rows.indexOf(e.target), true); }), { root: rowsEl, threshold: .7 });
+    rows.forEach(r => io3.observe(r));
+  }
+  setActive(0);
+  let confVisible = false;
+  if (window.IntersectionObserver) new IntersectionObserver(([e]) => confVisible = e.isIntersecting).observe($("#conferences"));
+  setInterval(() => { if (!reduce && wide.matches && confVisible && performance.now() - userPicked > 6000) setActive((active + 1) % rows.length); }, 3200);
+
+  // ---- ECG monitor ----
+  const ecg = $("#ecg"), ex = ecg.getContext("2d");
+  const G = (p, m, s) => Math.exp(-Math.pow((p - m) / s, 2));
+  const wave = p => .12 * G(p, .16, .028) - .1 * G(p, .262, .009) + G(p, .29, .012) - .24 * G(p, .318, .01) + .3 * G(p, .52, .05);
+  const thump = p => G(p, .33, .06) + .45 * G(p, .62, .08);
+  let eW = 0, eH = 0, eX = 0, eY = null, dpr = Math.min(devicePixelRatio || 1, 2);
+  function sizeEcg(){ eW = ecg.clientWidth; eH = ecg.clientHeight; ecg.width = eW * dpr; ecg.height = eH * dpr; ex.setTransform(dpr, 0, 0, dpr, 0, 0); eX = 0; eY = null;
+    if (reduce) { ex.strokeStyle = "#ff4458"; ex.lineWidth = 2; ex.beginPath(); for (let x = 0; x <= eW; x++) { const y = eH * .72 - wave((x / 150) % 1) * eH * .6; x ? ex.lineTo(x, y) : ex.moveTo(x, y); } ex.stroke(); } }
+  sizeEcg();
+  function drawEcg(dt){
+    const speed = 150, steps = Math.max(1, Math.ceil(speed * dt));
+    ex.strokeStyle = "#ff4458"; ex.lineWidth = 2; ex.lineJoin = "round"; ex.shadowColor = "#ff4458"; ex.shadowBlur = 8;
+    for (let s = 0; s < steps; s++) {
+      phase += (dt / steps) * bpm / 60;
+      const nx = eX + speed * dt / steps, y = eH * .72 - wave(phase % 1) * eH * .6;
+      if (nx >= eW) { eX = 0; eY = null; ex.clearRect(0, 0, 26, eH); continue; }
+      ex.clearRect(nx + 1, 0, 26, eH);
+      if (eY !== null) { ex.beginPath(); ex.moveTo(eX, eY); ex.lineTo(nx, y); ex.stroke(); }
+      eX = nx; eY = y;
     }
-    renderer.render(scene, camera);
   }
-  frame();
+  const bpmEl = $("#bpm");
+
+  // ---- Scroll-linked depth ----
+  const depths = $$(".depth").map(el => ({ el, inner: $(".depth-in", el), dir: +el.dataset.dir }));
+  const tl = $("#tl"), tlItems = $$("li", tl), bar = $("#bar"), heroCopy = $(".hero-copy");
+  function scrollFx(){
+    const H = innerHeight, max = document.documentElement.scrollHeight - H;
+    bar.style.setProperty("--scroll", max > 0 ? Math.min(1, scrollY / max) : 0);
+    if (!reduce) for (const d of depths) {
+      const r = d.el.getBoundingClientRect(); if (r.bottom < -100 || r.top > H + 100) continue;
+      const p = Math.max(-1, Math.min(1, (r.top + r.height / 2 - H / 2) / H));
+      d.inner.style.setProperty("--ry", (d.dir * (p * 34 - 6)) + "deg"); d.inner.style.setProperty("--rx", (p * -8) + "deg"); d.inner.style.setProperty("--py", (p * -26) + "px");
+    }
+    const tr = tl.getBoundingClientRect(), f = Math.max(0, Math.min(1, (H * .62 - tr.top) / tr.height));
+    tl.style.setProperty("--fill", reduce ? 1 : f);
+    tlItems.forEach(li => li.classList.toggle("on", reduce || li.getBoundingClientRect().top < H * .62));
+    if (fine && !reduce && scrollY < H) { h1.style.setProperty("--hy", (mx * 9) + "deg"); h1.style.setProperty("--hx", (-my * 7) + "deg"); }
+  }
+
+  // ---- The particle body (Three.js). The page still works if it cannot start. ----
+  let gl = null;
+  (function(){
+    const canvas = $("#gl"); if (!window.THREE) return;
+    let renderer; try { renderer = new THREE.WebGLRenderer({ canvas, antialias: false, alpha: true, powerPreference: "high-performance" }); } catch (e) { return; }
+    renderer.setPixelRatio(dpr);
+    const scene = new THREE.Scene(), FOV = 32, DIST = 7;
+    const camera = new THREE.PerspectiveCamera(FOV, 1, .1, 60); camera.position.z = DIST;
+    const small = innerWidth < 700, N = small ? 6500 : 12000;
+    const rnd = Math.random;
+
+    // heart surface: (x²+9/4y²+z²−1)³ − x²z³ − 9/80·y²z³ = 0, found by bisection along random rays
+    const hf = (x, y, z) => { const a = x*x + 2.25*y*y + z*z - 1; return a*a*a - x*x*z*z*z - .1125*y*y*z*z*z; };
+    const pHeart = new Float32Array(N*3), pField = new Float32Array(N*3), pGlobe = new Float32Array(N*3), pScat = new Float32Array(N*3);
+    const cHeart = new Float32Array(N*3), cGlobe = new Float32Array(N*3), aRnd = new Float32Array(N);
+    const A = new THREE.Color("#ff4458"), V = new THREE.Color("#5f8fff"), B = new THREE.Color("#ffe9dc"), tmp = new THREE.Color();
+
+    const bin = atob(LAND), isLand = (lon, lat) => { const i = Math.min(179, Math.floor((lon + 180) / 2)), j = Math.min(89, Math.floor((90 - lat) / 2)), k = j * 180 + i; return (bin.charCodeAt(k >> 3) >> (k & 7)) & 1; };
+    const land = [];
+    for (let lat = -58; lat <= 82; lat += 1.5) { const n = Math.round(Math.cos(lat * Math.PI / 180) * 240); for (let k = 0; k < n; k++) { const lon = -180 + 360 * k / n; if (isLand(lon, lat)) land.push(lon, lat); } }
+    const L = land.length / 2, ll = (lon, lat, r) => { const a = lat * Math.PI / 180, o = lon * Math.PI / 180; return [r * Math.cos(a) * Math.sin(o), r * Math.sin(a), r * Math.cos(a) * Math.cos(o)]; };
+
+    for (let i = 0; i < N; i++) {
+      // heart
+      let u = rnd() * 2 - 1, th = rnd() * Math.PI * 2, s = Math.sqrt(1 - u*u), dx = s * Math.cos(th), dy = s * Math.sin(th), dz = u, lo = 0, hi = 2;
+      for (let k = 0; k < 22; k++) { const m = (lo + hi) / 2; hf(dx*m, dy*m, dz*m) < 0 ? lo = m : hi = m; }
+      const shell = rnd() < .82 ? 1 - rnd() * .03 : Math.pow(rnd(), .5) * .92, r = lo * shell;
+      const hx = dx * r, hy = dz * r - .12, hz = dy * r * 1.15;
+      pHeart[i*3] = hx; pHeart[i*3+1] = hy; pHeart[i*3+2] = hz;
+      // arterial on the heart's left (viewer's right), venous on its right, as in an anatomy plate
+      const side = Math.max(0, Math.min(1, .5 + hx * 1.5 + (rnd() - .5) * .5));
+      tmp.copy(V).lerp(A, side); if (rnd() < .07) tmp.copy(B);
+      const lum = shell < .96 ? .45 : 1; cHeart[i*3] = tmp.r * lum; cHeart[i*3+1] = tmp.g * lum; cHeart[i*3+2] = tmp.b * lum;
+      // drifting field
+      pField[i*3] = (rnd() * 2 - 1) * 1.5; pField[i*3+1] = rnd() * 2 - 1; pField[i*3+2] = (rnd() * 2 - 1) * .8;
+      // globe
+      let g;
+      if (i < N * .86) { const k = i % L, j = i < L ? 0 : .7; g = ll(land[k*2] + (rnd() - .5) * j, land[k*2+1] + (rnd() - .5) * j, 1); tmp.copy(B).lerp(V, rnd() * .35); }
+      else { const u2 = rnd() * 2 - 1, t2 = rnd() * Math.PI * 2, s2 = Math.sqrt(1 - u2*u2); g = [s2 * Math.cos(t2), u2, s2 * Math.sin(t2)]; tmp.copy(V).multiplyScalar(.45); }
+      pGlobe[i*3] = g[0]; pGlobe[i*3+1] = g[1]; pGlobe[i*3+2] = g[2];
+      cGlobe[i*3] = tmp.r; cGlobe[i*3+1] = tmp.g; cGlobe[i*3+2] = tmp.b;
+      const sr = 2.5 + rnd() * 4, su = rnd() * 2 - 1, st = rnd() * Math.PI * 2, ss = Math.sqrt(1 - su*su);
+      pScat[i*3] = sr * ss * Math.cos(st); pScat[i*3+1] = sr * su; pScat[i*3+2] = sr * ss * Math.sin(st);
+      aRnd[i] = rnd();
+    }
+    const geo = new THREE.BufferGeometry();
+    geo.setAttribute("position", new THREE.BufferAttribute(pHeart, 3));
+    geo.setAttribute("aField", new THREE.BufferAttribute(pField, 3));
+    geo.setAttribute("aGlobe", new THREE.BufferAttribute(pGlobe, 3));
+    geo.setAttribute("aScat", new THREE.BufferAttribute(pScat, 3));
+    geo.setAttribute("aColH", new THREE.BufferAttribute(cHeart, 3));
+    geo.setAttribute("aColG", new THREE.BufferAttribute(cGlobe, 3));
+    geo.setAttribute("aRnd", new THREE.BufferAttribute(aRnd, 1));
+    const U = { uW: { value: new THREE.Vector3(1, 0, 0) }, uIntro: { value: reduce ? 1 : 0 }, uBeat: { value: 0 }, uTime: { value: 0 }, uSize: { value: 3 }, uAlpha: { value: 1 }, uDist: { value: DIST }, uScale: { value: 1 } };
+    const mat = new THREE.ShaderMaterial({ uniforms: U, transparent: true, depthWrite: false, depthTest: false, blending: THREE.AdditiveBlending,
+      vertexShader: `
+        attribute vec3 aField, aGlobe, aScat, aColH, aColG; attribute float aRnd;
+        uniform vec3 uW; uniform float uIntro, uBeat, uTime, uSize, uAlpha, uDist, uScale;
+        varying vec3 vCol; varying float vA;
+        void main(){
+          vec3 h = position * (1. + uBeat * .075 * (.55 + .45 * aRnd));
+          vec3 f = aField; f.y = mod(f.y + uTime * .018 * (.4 + aRnd) + 1., 2.) - 1.; f.x += sin(uTime * .25 + aRnd * 50.) * .03;
+          vec3 g = aGlobe * (1. + .012 * sin(uTime * 1.5 + aRnd * 30.));
+          vec3 p = h * uW.x + f * uW.y + g * uW.z;
+          p += (1. - max(uW.x, max(uW.y, uW.z))) * .5 * vec3(sin(aRnd * 91.), cos(aRnd * 57.), sin(aRnd * 33.));
+          float k = clamp(uIntro * 1.6 - aRnd * .6, 0., 1.); k = 1. - pow(1. - k, 4.);
+          p = mix(aScat, p, k);
+          vec4 mv = modelViewMatrix * vec4(p, 1.);
+          float dz = clamp((mv.z + uDist) / uScale, -1.2, 1.2);
+          float shade = mix(1., .32 + .68 * smoothstep(-1., 1., dz), uW.x);
+          vec3 n = normalize(normalMatrix * aGlobe);
+          shade *= mix(1., .1 + .9 * smoothstep(-.2, .3, n.z), uW.z);
+          float tw = .75 + .25 * sin(uTime * 2. + aRnd * 80.);
+          vCol = mix(aColH, aColG, uW.z);
+          vA = uAlpha * shade * tw * mix(1., .55 + .45 * aRnd, uW.y) * k;
+          gl_Position = projectionMatrix * mv;
+          gl_PointSize = uSize * (.55 + .9 * aRnd) * (1. + uBeat * .35 * uW.x) * (uDist / -mv.z);
+        }`,
+      fragmentShader: `
+        varying vec3 vCol; varying float vA;
+        void main(){ float d = length(gl_PointCoord - .5); float a = smoothstep(.5, .05, d); gl_FragColor = vec4(vCol, a * a * vA); }` });
+    const pts = new THREE.Points(geo, mat); pts.frustumCulled = false;
+    const group = new THREE.Group(); group.add(pts); scene.add(group);
+
+    // congress cities and flight arcs from Istanbul
+    const dot = document.createElement("canvas"); dot.width = dot.height = 64;
+    const dg = dot.getContext("2d"), gr = dg.createRadialGradient(32, 32, 0, 32, 32, 32);
+    gr.addColorStop(0, "rgba(255,255,255,1)"); gr.addColorStop(.3, "rgba(255,255,255,.7)"); gr.addColorStop(1, "rgba(255,255,255,0)"); dg.fillStyle = gr; dg.fillRect(0, 0, 64, 64);
+    const dotTex = new THREE.CanvasTexture(dot);
+    const home = new THREE.Vector3(...ll(28.98, 41.01, 1));
+    const cities = rows.map(r => {
+      const lat = +r.dataset.lat, lon = +r.dataset.lon, v = new THREE.Vector3(...ll(lon, lat, 1.01));
+      const sp = new THREE.Sprite(new THREE.SpriteMaterial({ map: dotTex, color: 0xff4458, transparent: true, depthTest: false, blending: THREE.AdditiveBlending })); sp.position.copy(v); group.add(sp);
+      let line = null, arc = null; const ang = home.angleTo(v);
+      if (ang > .01) {
+        arc = []; const a = home.clone().normalize(), b = v.clone().normalize(), so = Math.sin(ang);
+        for (let k = 0; k <= 60; k++) { const t = k / 60, p = a.clone().multiplyScalar(Math.sin((1 - t) * ang) / so).add(b.clone().multiplyScalar(Math.sin(t * ang) / so)); arc.push(p.multiplyScalar(1.01 + Math.min(.45, ang * .35) * Math.sin(Math.PI * t))); }
+        line = new THREE.Line(new THREE.BufferGeometry().setFromPoints(arc), new THREE.LineBasicMaterial({ color: 0xff4458, transparent: true, depthTest: false, blending: THREE.AdditiveBlending })); group.add(line);
+      }
+      return { lat, lon, v, sp, line, arc };
+    });
+    const runner = new THREE.Sprite(new THREE.SpriteMaterial({ map: dotTex, color: 0xffffff, transparent: true, depthTest: false, blending: THREE.AdditiveBlending })); group.add(runner);
+
+    const anchors = [["#a-heart", 0], ["#a-globe", 2], ["#a-heart2", 0]].map(([s, shape]) => ({ el: $(s), shape }));
+    let W = 0, H = 0;
+    function resize(){ W = canvas.clientWidth; H = canvas.clientHeight; renderer.setSize(W, H, false); camera.aspect = W / H; camera.updateProjectionMatrix(); }
+    resize();
+    const sm = (a, b, x) => { const t = Math.max(0, Math.min(1, (x - a) / (b - a))); return t * t * (3 - 2 * t); };
+    const lerp = (a, b, t) => a + (b - a) * t, ev = new THREE.Vector3();
+    let intro = reduce ? 1 : 0, rotX = 0, rotY = 0, spin = 0;
+
+    gl = { resize, frame(dt, t, beat){
+      const wpp = 2 * DIST * Math.tan(FOV * Math.PI / 360) / H;
+      let best = null, e = 0, br = null;
+      for (const a of anchors) { const r = a.el.getBoundingClientRect(), d = Math.abs(r.top + r.height / 2 - H / 2) / H, pr = 1 - sm(.5, 1.2, d); if (pr > e) { e = pr; best = a; br = r; } }
+      const shape = best ? best.shape : 0, cover = Math.max(W, H) / 2;
+      const cx = best ? lerp(W / 2, br.left + br.width / 2, e) : W / 2, cy = best ? lerp(H / 2, br.top + br.height / 2, e) : H / 2;
+      const unit = best ? lerp(cover, Math.min(br.width, br.height) / 2 * (shape === 2 ? .84 : .8), e) : cover;
+      group.position.set((cx - W / 2) * wpp, -(cy - H / 2) * wpp, 0); group.scale.setScalar(unit * wpp);
+      U.uW.value.set(shape === 0 ? e : 0, 1 - e, shape === 2 ? e : 0);
+      U.uScale.value = unit * wpp; U.uTime.value = t; U.uBeat.value = beat;
+      U.uAlpha.value = lerp(small ? .55 : .75, shape === 2 ? 1.1 : 1.35, e);
+      U.uSize.value = lerp(2.6, Math.max(1.9, Math.min(4.6, unit * .0135)), e) * dpr;
+      if (intro < 1) { intro = Math.min(1, intro + dt / 2.6); U.uIntro.value = intro; }
+      // rotation: heart sways and follows the pointer, globe turns to the active city
+      let tx = 0, ty = 0; const gW = shape === 2 ? e : 0;
+      if (e > .4 && shape === 0) { ty = (reduce ? 0 : Math.sin(t * .45) * .5) + mx * .8; tx = my * .45; }
+      else if (e > .4) { const c = cities[active]; ty = -c.lon * Math.PI / 180 + mx * .25; tx = c.lat * Math.PI / 180 * .75 + my * .15; }
+      else { spin += dt * .03; ty = spin; }
+      let dy = ty - rotY; dy = Math.atan2(Math.sin(dy), Math.cos(dy));
+      const kd = reduce ? 1 : Math.min(1, dt * 3.2); rotY += dy * kd; rotX += (tx - rotX) * kd;
+      group.rotation.set(rotX, rotY, 0);
+      cities.forEach((c, i) => {
+        const on = i === active, front = ev.copy(c.v).applyEuler(group.rotation).z > -.05 ? 1 : .18, pulse = on ? 1 + .35 * Math.sin(t * 5) : 1;
+        c.sp.material.opacity = gW * front * (on ? 1 : .7); c.sp.scale.setScalar((on ? .13 : .07) * pulse);
+        if (c.line) c.line.material.opacity = gW * (on ? .95 : .22);
+      });
+      const ac = cities[active];
+      if (ac.arc && gW > .01) { const f = (t * .45) % 1, k = f * 60, i0 = Math.floor(k); runner.position.lerpVectors(ac.arc[i0], ac.arc[Math.min(60, i0 + 1)], k - i0); runner.material.opacity = gW * Math.sin(Math.PI * f); runner.scale.setScalar(.09); }
+      else runner.material.opacity = 0;
+      renderer.render(scene, camera);
+    } };
+  })();
+
+  // ---- Main loop ----
+  let last = performance.now(), t = 0;
+  function loop(now){
+    requestAnimationFrame(loop);
+    const dt = Math.min(.05, (now - last) / 1000); last = now; t += dt;
+    if (document.hidden) return;
+    bpm += (bpmTarget - bpm) * Math.min(1, dt * .35);
+    if (!reduce) drawEcg(dt); else phase = 0;
+    const shown = Math.round(bpm); if (bpmEl.textContent != shown) bpmEl.textContent = shown;
+    scrollFx();
+    if (gl) gl.frame(dt, t, reduce ? 0 : thump(phase % 1));
+  }
+  addEventListener("resize", () => { sizeEcg(); if (gl) gl.resize(); });
+  requestAnimationFrame(loop);
 })();
 </script>
 </body>
