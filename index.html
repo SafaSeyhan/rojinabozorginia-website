@@ -35,6 +35,8 @@ p{margin:0}
 .wrap{max-width:var(--wrap);margin-inline:auto;padding-left:max(var(--gut),env(safe-area-inset-left,0px));padding-right:max(var(--gut),env(safe-area-inset-right,0px))}
 
 #gl{position:fixed;left:0;top:0;width:100%;height:100vh;height:100lvh;z-index:0;pointer-events:none;display:block}
+/* Phones: the canvas is a tall strip laid into the page so the browser scrolls it natively, in step with the content */
+#gl.slide{position:absolute;height:200vh;height:200lvh;will-change:transform}
 #site{position:relative;z-index:1}
 .anchor{pointer-events:none}
 
@@ -737,15 +739,15 @@ const LAND = "AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
     geo.setAttribute("aColH", new THREE.BufferAttribute(cHeart, 3));
     geo.setAttribute("aColG", new THREE.BufferAttribute(cGlobe, 3));
     geo.setAttribute("aRnd", new THREE.BufferAttribute(aRnd, 1));
-    const U = { uW: { value: new THREE.Vector3(1, 0, 0) }, uIntro: { value: reduce ? 1 : 0 }, uBeat: { value: 0 }, uTime: { value: 0 }, uSize: { value: 3 }, uAlpha: { value: 1 }, uDist: { value: DIST }, uScale: { value: 1 } };
+    const U = { uW: { value: new THREE.Vector3(1, 0, 0) }, uIntro: { value: reduce ? 1 : 0 }, uBeat: { value: 0 }, uTime: { value: 0 }, uSize: { value: 3 }, uAlpha: { value: 1 }, uDist: { value: DIST }, uScale: { value: 1 }, uFOff: { value: 0 }, uFX: { value: 1 } };
     const mat = new THREE.ShaderMaterial({ uniforms: U, transparent: true, depthWrite: false, depthTest: false, blending: THREE.AdditiveBlending,
       vertexShader: `
         attribute vec3 aField, aGlobe, aScat, aColH, aColG; attribute float aRnd;
-        uniform vec3 uW; uniform float uIntro, uBeat, uTime, uSize, uAlpha, uDist, uScale;
+        uniform vec3 uW; uniform float uIntro, uBeat, uTime, uSize, uAlpha, uDist, uScale, uFOff, uFX;
         varying vec3 vCol; varying float vA;
         void main(){
           vec3 h = position * (1. + uBeat * .075 * (.55 + .45 * aRnd));
-          vec3 f = aField; f.y = mod(f.y + uTime * .018 * (.4 + aRnd) + 1., 2.) - 1.; f.x += sin(uTime * .25 + aRnd * 50.) * .03;
+          vec3 f = aField; f.x *= uFX; f.y = mod(f.y + uTime * .018 * (.4 + aRnd) + uFOff + 1., 2.) - 1.; f.x += sin(uTime * .25 + aRnd * 50.) * .03;
           vec3 g = aGlobe * (1. + .012 * sin(uTime * 1.5 + aRnd * 30.));
           vec3 p = h * uW.x + f * uW.y + g * uW.z;
           p += (1. - max(uW.x, max(uW.y, uW.z))) * .5 * vec3(sin(aRnd * 91.), cos(aRnd * 57.), sin(aRnd * 33.));
@@ -789,22 +791,31 @@ const LAND = "AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
 
     const anchors = [["#a-heart", 0], ["#a-globe", 2], ["#a-heart2", 0]].map(([s, shape]) => ({ el: $(s), shape }));
     let W = 0, H = 0;
-    function resize(){ W = canvas.clientWidth; H = canvas.clientHeight; renderer.setSize(W, H, false); camera.aspect = W / H; camera.updateProjectionMatrix(); }
+    // On touch screens the page scrolls on the compositor, ahead of any script. A fixed canvas that script re-aims every frame
+    // therefore trails the content. Instead the canvas is twice the screen height, sits in the page, and is only moved ("re-parked")
+    // when the screen nears its edge, so between those moments the shapes scroll with the page for free.
+    const slide = !(fine && innerWidth >= 900); if (slide) canvas.classList.add("slide");
+    let parkY = 0, docH = 0;
+    function resize(){ W = canvas.clientWidth; H = canvas.clientHeight; renderer.setSize(W, H, false); camera.aspect = W / H; camera.updateProjectionMatrix(); docH = site.offsetHeight; parkY = -1e9; }
+    if (window.ResizeObserver) new ResizeObserver(() => { docH = site.offsetHeight; }).observe(site);
     resize();
     const sm = (a, b, x) => { const t = Math.max(0, Math.min(1, (x - a) / (b - a))); return t * t * (3 - 2 * t); };
     const lerp = (a, b, t) => a + (b - a) * t, ev = new THREE.Vector3();
     let intro = reduce ? 1 : 0, rotX = 0, rotY = 0, spin = 0;
 
     gl = { resize, frame(dt, t, beat){
-      const wpp = 2 * DIST * Math.tan(FOV * Math.PI / 360) / H, VH = innerHeight;
+      const wpp = 2 * DIST * Math.tan(FOV * Math.PI / 360) / H, VH = innerHeight, sy = scrollY;
+      if (slide) { const slack = Math.max(0, (H - VH) / 2), ideal = Math.max(0, Math.min(docH - H, sy - slack)); if (Math.abs(ideal - parkY) > slack * .5) { parkY = Math.round(ideal); canvas.style.transform = "translate3d(0," + parkY + "px,0)"; } }
+      const off = slide ? sy - parkY : 0, fcy = slide ? H / 2 : VH / 2;
       let best = null, e = 0, br = null;
       for (const a of anchors) { const r = a.el.getBoundingClientRect(), d = Math.abs(r.top + r.height / 2 - VH / 2) / VH, pr = 1 - sm(.5, 1.2, d); if (pr > e) { e = pr; best = a; br = r; } }
-      const shape = best ? best.shape : 0, cover = Math.max(W, H) / 2;
-      const cx = best ? lerp(W / 2, br.left + br.width / 2, e) : W / 2, cy = best ? lerp(VH / 2, br.top + br.height / 2, e) : VH / 2;
+      const shape = best ? best.shape : 0, cover = slide ? Math.max(H / 2, W / 2.8) : Math.max(W, H) / 2;
+      const cx = best ? lerp(W / 2, br.left + br.width / 2, e) : W / 2, cy = best ? lerp(fcy, br.top + br.height / 2 + off, e) : fcy;
       const unit = best ? lerp(cover, Math.min(br.width, br.height) / 2 * (shape === 2 ? .84 : .8), e) : cover;
       group.position.set((cx - W / 2) * wpp, -(cy - H / 2) * wpp, 0); group.scale.setScalar(unit * wpp);
       U.uW.value.set(shape === 0 ? e : 0, 1 - e, shape === 2 ? e : 0);
-      U.uScale.value = unit * wpp; U.uTime.value = t; U.uBeat.value = beat;
+      U.uScale.value = unit * wpp; U.uTime.value = t;
+      if (slide) { U.uFOff.value = parkY / cover; U.uFX.value = Math.min(1, W / (1.86 * cover)); } U.uBeat.value = beat;
       U.uAlpha.value = lerp(small ? .55 : .75, shape === 2 ? 1.1 : 1.35, e);
       U.uSize.value = lerp(2.6, Math.max(1.9, Math.min(4.6, unit * .0135)), e) * dpr;
       if (intro < 1) { intro = Math.min(1, intro + dt / 2.6); U.uIntro.value = intro; }
